@@ -1,0 +1,51 @@
+<div class="inner-container bg-white section-gap-lg">
+    <div class="container">
+      <div fxLayout='row wrap' fxLayoutAlign="center center">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="70" fxFlex.xl="70">
+          <div fxLayout='row wrap' fxLayoutAlign="center center">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+              <div class="form-img register-image-category">
+              </div>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+              <mat-card class="register-form form-margin">
+                <h4>Registrar categoría</h4>
+                <!-- <p>Es rápido y fácil</p> -->
+                <form *ngIf="dataForm" [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+                  <div class="mb-4">
+                    <mat-form-field class="w-100 mt-3">
+                      <input matInput type="text" formControlName="nombre" placeholder="Nombre" required>
+                      <mat-error *ngIf="dataForm.get('nombre').hasError('required')">El campo no puede estar vacío</mat-error> 
+                    </mat-form-field>
+                    <mat-form-field class="w-100 mt-3">
+                      <input matInput type="text" formControlName="descripcion" placeholder="Descripción" required>
+                    </mat-form-field>
+                    <mat-form-field class="w-100 mt-3">
+                      <mat-select class="w-full overflow-hidden" formControlName="id_competencia" 
+                        *ngIf="competenciaList" style="width: 100%" placeholder="Seleccione una opción">
+                        <mat-option>Seleccionar una opción</mat-option>
+                        <mat-option *ngFor="let item of competenciaList" [value]="item.id">
+                           {{item.nombre}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="dataForm.get('id_competencia').hasError('required')">El campo no puede estar vacío</mat-error> 
+                    </mat-form-field>
+                    
+                  </div>
+                  <button class="button-lg mb-3" style="background: #9AD135;" mat-flat-button type="submit">
+                    <span *ngIf="!dataForm.disabled">
+                      Registrarse
+                    </span>
+                    <mat-progress-spinner *ngIf="dataForm.disabled" [diameter]="24" [mode]="'indeterminate'">
+                    </mat-progress-spinner>
+                </button>
+
+                </form>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

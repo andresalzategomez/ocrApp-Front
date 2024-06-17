@@ -1,0 +1,71 @@
+<div class="inner-container bg-white section-gap-lg">
+    <div class="container">
+      <div fxLayout='row wrap' fxLayoutAlign="center center">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="70" fxFlex.xl="70">
+          <div fxLayout='row wrap' fxLayoutAlign="center center">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+              <div class="form-img register-image">
+              </div>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+              <mat-card class="register-form form-margin">
+                <h4>Registrar competencia</h4>
+                <!-- <p>Es rápido y fácil</p> -->
+                <form *ngIf="dataForm" [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+                  <div class="mb-4">
+                    <mat-form-field class="w-100 mt-3">
+                      <input matInput type="text" formControlName="nombre" placeholder="Nombre" required>
+                      <mat-error *ngIf="dataForm.get('nombre').hasError('required')">El campo no puede estar vacío</mat-error> 
+                    </mat-form-field>
+                    <mat-form-field class="w-100 mt-3">
+                      <input matInput type="text" formControlName="lugar" placeholder="Lugar" required>
+                      <mat-error *ngIf="dataForm.get('lugar').hasError('required')">El campo no puede estar vacío</mat-error> 
+                    </mat-form-field>
+                    <mat-form-field class="w-100 mt-3">
+                      <input matInput type="text" formControlName="direccion" placeholder="Dirección" required>
+                      <mat-error *ngIf="dataForm.get('direccion').hasError('required')">El campo no puede estar vacío</mat-error> 
+                    </mat-form-field>
+                    <mat-form-field class="w-100 mt-3">
+                      <input matInput type="text" formControlName="organizador" placeholder="Nombre organizador" required>
+                      <mat-error *ngIf="dataForm.get('organizador').hasError('required')">El campo no puede estar vacío</mat-error> 
+                    </mat-form-field>
+                    <mat-form-field class="w-100 mt-3">
+                      <input matInput formControlName="celular_organizador" maxlength="10" minlength="10" placeholder="Celular organizador" required>
+                      <mat-error *ngIf="dataForm.get('celular_organizador').hasError('required')">El campo no puede estar vacío</mat-error> 
+                      <mat-error class="mat-error" *ngIf="dataForm.get('celular_organizador').hasError('minlength')">La cantidad de dígitos es mínimo 10</mat-error>
+                      <mat-error class="mat-error" *ngIf="dataForm.get('celular_organizador').hasError('maxlength')">La cantidad de dígitos es máximo 10</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="w-100 mt-3">
+                      <input matInput type="text" formControlName="documento_organizador" placeholder="Documento organizador" required>
+                      <mat-error *ngIf="dataForm.get('documento_organizador').hasError('required')">El campo no puede estar vacío</mat-error> 
+                    </mat-form-field>
+                    <mat-form-field class="w-100 mt-3">
+                      <input matInput type="email" formControlName="email_organizador" placeholder="Correo organizador" required>
+                      <mat-error *ngIf="dataForm.get('email_organizador').hasError('required')">El campo no puede estar vacío</mat-error> 
+                      <mat-error class="mat-error" *ngIf="dataForm.controls['email_organizador'].errors?.['pattern']">Correo inválido</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="w-100 mt-3">
+                      <input class="w-full text-black rounded" matInput [matDatepicker]="fecha" placeholder="Seleccione la fecha de competencia"
+                        [min]="minDate" formControlName="fecha">
+                      <mat-datepicker-toggle matSuffix [for]="fecha"></mat-datepicker-toggle>
+                      <mat-datepicker #fecha></mat-datepicker>
+                      <mat-error *ngIf="dataForm.get('fecha').hasError('required')">El campo no puede estar vacío</mat-error>
+                    </mat-form-field>
+                  </div>
+                  <button class="button-lg mb-3" style="background: #9AD135;" mat-flat-button type="submit">
+                    <span *ngIf="!dataForm.disabled">
+                      Registrarse
+                    </span>
+                    <mat-progress-spinner *ngIf="dataForm.disabled" [diameter]="24" [mode]="'indeterminate'">
+                    </mat-progress-spinner>
+                </button>
+
+                </form>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

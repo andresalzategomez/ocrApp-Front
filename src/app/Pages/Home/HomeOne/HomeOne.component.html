@@ -1,0 +1,26 @@
+<div class="home-main-banner mb-5">
+  <div class="container">
+    <div fxLayout='row wrap' fxLayoutGap="0px">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="63" fxFlex.xl="63">
+        <div class="home-slider">
+          <ngx-slick-carousel class="carousel" [config]="slideConfig">
+            <div ngxSlickItem><div class="bannerStyle slider-img-1"></div></div>
+            <div ngxSlickItem><div class="bannerStyle slider-img-2"></div></div>
+            <div ngxSlickItem><div class="bannerStyle slider-img-3"></div></div>
+         </ngx-slick-carousel>
+        </div>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="32" fxFlex.xl="32">
+        <div [routerLink]="['/atleta/register']" class="aside-banner">
+          <a class="card-shadow"> <img [src]="urlSlide1" alt="side" width="547" height="315"></a>
+          <div class="imageTitle"><b>REGISTRAR ATLETA</b></div>
+        </div>
+
+        <!-- <div [routerLink]="['/categoria/create']" class="aside-banner">
+          <a class="card-shadow"><img [src]="urlSlide2" alt="side" width="547" height="315"></a>
+          <div class="imageTitle"><b>REGISTRAR CATEGORÍA</b></div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>
