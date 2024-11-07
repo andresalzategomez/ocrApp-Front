@@ -1,59 +1,47 @@
 <div class="m-3" fxLayoutAlign="space-between center">
     <div class="title">
+       <!-- <h3 class="mb-0">{{competencia?.nombre + " - " + competencia?.categoria}}</h3> -->
        <h3 class="mb-0">{{competencia?.nombre}}</h3>
        <h4 class="mb-0">{{competencia?.fecha}}</h4>
     </div>
+    <div class="md:w-1/4 lg:w-1/4 xl:w-1/4 sm:w-full xs:w-full relative z-0 mb-2 px-2 group xl:inline-flex lg:inline-flex md:inline-flex ">
+        <mat-form-field class="w-100">
+            <mat-select class="w-100 overflow-hidden" *ngIf="categorias" placeholder="Seleccionar una categoría" style="width: 100%">
+                <mat-option>Seleccionar una opción</mat-option>
+                <mat-option *ngFor="let item of categorias" [value]="item" (click)="buscarGanadoresCategoria(item)">
+                    {{item.nombre}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <!-- <button class="button-lg mb-3" style="background: #9AD135;" mat-flat-button>Buscar</button> -->
+    </div>  
 </div>
 
 <div class="m-3" fxLayoutJustify="space-end" fxLayoutAlign="space-between end">
    <div class="title">
       <h5 class="mb-0 h5">Atletas</h5>
    </div>
-   <div>
-      <button *ngIf="!competenciaFinalizada" class="button-lg mb-3" (click)="darLlegada()" 
-         style="background: #9AD135;" mat-flat-button [disabled]="!competenciaIniciada">
-         Dar llegada
-      </button>
-      <button *ngIf="!competenciaFinalizada" class="button-lg mb-3" (click)="lanzarOleada()" 
-         style="background: #9AD135;" mat-flat-button [disabled]="!competenciaIniciada">
-         Lanzar oleada
-      </button>
-      <button *ngIf="competenciaFinalizada" class="button-lg mb-3" (click)="verGanadores()" 
-         style="background: #9AD135;" mat-flat-button [disabled]="!competenciaIniciada">
-         Calcular ganadores
-      </button>
-   </div>
-   <div>
-      <div>
-         <h4>{{'Hora inicio: ' + (HoraInicio?HoraInicio:'')}}</h4>
-         <h4 *ngIf="competenciaFinalizada">{{'Hora Fín: ' + (HoraFin)}}</h4>
-      </div>
-      <button class="button-lg mb-3" (click)="iniciarCompetencia()" 
-         style="background: #9AD135;" mat-flat-button [disabled]="competenciaIniciada">
-         Iniciar Competencia
-      </button>
-      <button class="button-lg mb-3" (click)="finalizarCompetencia()" 
-         style="background: #9AD135;" mat-flat-button *ngIf="competenciaIniciada" [disabled]="competenciaFinalizada">
-         Detener Competencia
-      </button>
-   </div>
 </div>
 
- <ng-container class="m-3" *ngIf="atletasList && atletasList.length >= 0; else elseBlock">
-    <ng-container>
+ <ng-container class="m-3" *ngIf="atletas && atletas.length >= 0; else elseBlock">
+    <ng-container *ngIf="buscarByCategoria">
        <div fxLayout="row wrap">
           <div fxFlex.gt-md="100" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
              <div class="product-list">
                 <mat-card class="pt-0">
                    <div class="overflow-hidden">
                       <div class="table-responsive-x product-list-table">         
-                         <table class="w-100 table-scroll-wrap" mat-table [dataSource]="atletasList" matSort>
+                         <table class="w-100 table-scroll-wrap" mat-table [dataSource]="atletas" matSort>
+                            <ng-container matColumnDef="posicion">
+                                <th mat-header-cell *matHeaderCellDef>Pos</th>
+                                <td mat-cell *matCellDef="let element; let i = index;">{{i+1}}</td>
+                            </ng-container>
                             <ng-container matColumnDef="no_atleta">
                                <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef mat-sort-header>No Atleta</th>
                                <td class="text-nowrap px-3" mat-cell *matCellDef="let element">{{element.no_atleta}}</td>
                             </ng-container>
                             <ng-container matColumnDef="no_oleada">
-                               <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef mat-sort-header>No oleada</th>
+                               <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef mat-sort-header>No Oleada</th>
                                <td class="text-nowrap px-3" mat-cell *matCellDef="let element">{{element.no_oleada}}</td>
                             </ng-container>
                             <ng-container matColumnDef="nombre">
@@ -72,9 +60,18 @@
                                <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef mat-sort-header>Categoria</th>
                                <td class="text-nowrap px-3" mat-cell *matCellDef="let element">{{changeCategoria(element.categoria_id)}}</td>
                             </ng-container>
-                            <ng-container matColumnDef="tiempo">
-                               <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef mat-sort-header>Tiempo</th>
+                            <ng-container matColumnDef="fechaInicio">
+                               <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef mat-sort-header>Fecha Fin (h:m:s)</th>
+                               <td class="text-nowrap px-3" mat-cell *matCellDef="let element">{{verFechaInicio(element)}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="tiempo_competencia">
+                               <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef mat-sort-header>Fecha Fin (h:m:s)</th>
                                <td class="text-nowrap px-3" mat-cell *matCellDef="let element">{{element.tiempo_competencia | date: 'HH:mm:ss.SSS'}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="tiempo">
+                               <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef mat-sort-header>Tiempo (h:m:s)</th>
+                               <!-- <td class="text-nowrap px-3" mat-cell *matCellDef="let element">{{element.tiempo_competencia | date: 'HH:mm:ss.SSS'}}</td> -->
+                               <td class="text-nowrap px-3" mat-cell *matCellDef="let element">{{caluclarTiempoPorAtleta(element)}}</td>
                             </ng-container>
                             <ng-container matColumnDef="estado">
                                <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>

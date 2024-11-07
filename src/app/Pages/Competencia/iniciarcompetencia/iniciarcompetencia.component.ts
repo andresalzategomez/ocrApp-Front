@@ -2,27 +2,28 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { Competencia, Oleada } from '../../../models/competencia.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CategoriaService } from '../../../../Categoria/services/categoria.service';
-import { AtletaService } from '../../../../Atleta/services/atleta.service';
-import { Atleta } from '../../../../Atleta/models/atleta.model';
-import { CompetenciaService } from '../../../services/competencia.service';
-import { Categoria } from '../../../../Categoria/models/categoria.model';
 import Swal from 'sweetalert2';
 import { formatDate } from '@angular/common';
-import { GanadoresDialogComponent } from '../../../ganadores-dialog/ganadores-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { dialogIniciarOleadaComponent } from '../../../dialoginiciaroleada/dialoginiciaroleada.component';
+import { Atleta } from '../../Atleta/models/atleta.model';
+import { AtletaService } from '../../Atleta/services/atleta.service';
+import { Categoria } from '../../Categoria/models/categoria.model';
+import { CategoriaService } from '../../Categoria/services/categoria.service';
+import { GanadoresDialogComponent } from '../ganadores-dialog/ganadores-dialog.component';
+import { Competencia } from '../models/competencia.model';
+import { CompetenciaService } from '../services/competencia.service';
 
 declare let alertify: any; 
 
 @Component({
-  selector: 'app-showcompetencia',
-  templateUrl: './showcompetencia.component.html',
-  styleUrls: ['./showcompetencia.component.css']
+  selector: 'app-iniciarcompetencia',
+  templateUrl: './iniciarcompetencia.component.html',
+  styleUrls: ['./iniciarcompetencia.component.css']
 })
-export class ShowCompetenciaComponent implements OnInit {
+export class IniciarcompetenciaComponent implements OnInit {
+
+  arrayFaltanteCateg:any[] = [[]];
 
   competenciaIniciada:boolean = false
   competenciaFinalizada:boolean = false
@@ -30,12 +31,12 @@ export class ShowCompetenciaComponent implements OnInit {
   HoraFin:string;
   idCompetencia:number
   competencia:Competencia
-  oleadas:Oleada[] = []
   categorias:Categoria[]=[]
 	atletasList:Atleta [] = []
 	popUpDeleteUserResponse : any;
 	showType	    				: string = 'list';
-	displayedProductColumns : string [] = ['no_atleta', 'no_oleada', 'categoria', 'nombre', 'documento', 'email', 'tiempo', 'estado'];
+	displayedAtletaColumns : string [] = ['nombre', 'documento','no_atleta', 'categoria', 'oleada', 'action'];
+	displayedCategoryColumns : string [] = ['nombre', 'descripcion', 'oleadas', 'action'];
 	@ViewChild(MatPaginator) paginator : MatPaginator;
 	@ViewChild(MatSort) sort           : MatSort;
 
@@ -52,12 +53,15 @@ export class ShowCompetenciaComponent implements OnInit {
 	ngOnInit() {
     this.idCompetencia =  this.route.snapshot.params['idCompetencia'];
     console.log("idCompetencia", this.idCompetencia);
-    
-		this.findCompetenciaById()
-		this.findOleadaByCompetencia()
-		this.getCategoriaByCompetencia()
-    this.findAtletaByCategoria()
+
+    this.initForm();
 	}
+
+  async initForm(){
+    await this.findCompetenciaById()
+		await this.getCategoriaByCompetencia()
+    await this.findAtletaByCompetencia()
+  }
 
   findCompetenciaById(){
     this.competenciaService.getCompetenciaById(this.idCompetencia)
@@ -90,23 +94,6 @@ export class ShowCompetenciaComponent implements OnInit {
       });
   }
 
-  findOleadaByCompetencia(){
-    this.competenciaService.getOleadaByCompetencia(this.idCompetencia)
-      .subscribe({
-        next: (data: Oleada[]) => {
-          console.log("data oleadas", data);
-          this.oleadas = data;
-        },
-        error: (err) => {
-          // this.showAlert = true;
-          // this.alert = {
-          //   type   : 'error',
-          //   message: `${err.errorDescription}`
-          // };
-        },
-      });
-  }
-
   getCategoriaByCompetencia(){
     this.categoriaService.getCategoriaByCompetencia(this.idCompetencia)
       .subscribe({
@@ -124,12 +111,13 @@ export class ShowCompetenciaComponent implements OnInit {
       });
   }
 
-  findAtletaByCategoria(){
+  findAtletaByCompetencia(){
     this.atletaService.getAtletaByCompetencia(this.idCompetencia)
       .subscribe({
         next: (data: Atleta[]) => {
           this.atletasList = data
           console.log("data", this.atletasList);
+          this.validarAteltasPorOleada();
         },
         error: (err) => {
           // this.showAlert = true;
@@ -141,6 +129,31 @@ export class ShowCompetenciaComponent implements OnInit {
       });
   }
 
+  validarAteltasPorOleada(){
+    this.categorias.forEach(elementCate => {
+      let contAtletas = 0;
+      this.atletasList.forEach(elementAtl => {
+        if(elementCate.id == elementAtl.categoria_id) contAtletas = contAtletas + 1;
+      });
+      let oleadas = contAtletas / elementCate.no_oleada;
+      if(!Number.isInteger(contAtletas / elementCate.no_oleada)) oleadas = Math.trunc(contAtletas / elementCate.no_oleada) + 1
+      let arrayConst:number[] = []
+      for (let i = 1; i <= oleadas; i++) {
+        arrayConst[i]= elementCate?.no_oleada
+      }
+      this.arrayFaltanteCateg[elementCate.nombre] = arrayConst;
+    });
+
+    this.atletasList.forEach(element => {
+      if(element.no_oleada != null){
+        const categoria = this.categorias.find(item => item.id === element.categoria_id);
+        if(categoria) this.arrayFaltanteCateg[categoria.nombre][element.no_oleada] = this.arrayFaltanteCateg[categoria.nombre][element.no_oleada] -1;
+      }
+    });
+
+    console.log("arrayFaltanteCateg", this.arrayFaltanteCateg);
+  }
+
   changeCategoria(idCategoria){
     let nombreCategoria:string = '';
     const categoriaFind = this.categorias.find(item => item.id === idCategoria);
@@ -149,7 +162,7 @@ export class ShowCompetenciaComponent implements OnInit {
     return nombreCategoria;
   }
 
-  async iniciarCompetencia(){
+  iniciarCompetencia(){
     Swal.fire({
       title: 'Iniciar Competencia',
       text: `Está seguro que desea iniciar la competencia?`,
@@ -171,56 +184,6 @@ export class ShowCompetenciaComponent implements OnInit {
         this.updateCompetencia(this.competencia)
       }
     });
-  }
-
-  lanzarOleada(){
-    const dialogRef = this.dialog.open(dialogIniciarOleadaComponent, { width: '80%', minWidth: '70vw', maxHeight: '95vh', data: {competencia: this.competencia, categoria: this.categorias} });
-
-      dialogRef.afterClosed().subscribe(result => {
-        console.log("result", result);
-        
-        if(result){
-          const oleadaFind = this.oleadas.find(oleada => (oleada.no_oleada === result?.no_oleada && oleada.id_categoria == result.id_categoria));
-          if(!oleadaFind){
-            console.log("encontrada", result);
-            this.saveOleada(result);
-          }else{
-            alertify.set('notifier','position', 'top-right');
-            alertify.warning('La oleada ya está iniciada!',2);
-          }
-        }
-      });
-  }
-
-  saveOleada(oleada){
-    this.oleadas.push(oleada);
-    console.log("oleada +1", this.oleadas);
-    
-    this.competenciaService.saveOleada(oleada)
-      .subscribe({
-        next: (data: any) => {
-          console.log("data", data);
-          if(data?.response == 'OK'){
-            alertify.set('notifier','position', 'top-right');
-            alertify.success('Oleada creada con exito!',2);
-          }
-        },
-        error: (err) => {
-          // this.showAlert = true;
-          // this.alert = {
-          //   type   : 'error',
-          //   message: `${err.errorDescription}`
-          // };
-        },
-      });
-  }
-
-  private buildSelectHtml(optionsList: any[]): string {
-    let resultString = ''; 
-    for (let i = 0; i < optionsList.length; i++) { 
-      resultString += '<option value=' + optionsList[i].id + '>' + optionsList[i].nombre + '</option>'
-    }
-    return resultString; 
   }
 
   finalizarCompetencia(){
@@ -272,36 +235,27 @@ export class ShowCompetenciaComponent implements OnInit {
         const ateletaFinalizado = this.atletasList.find(item => item.no_atleta === no_atleta);
         if(ateletaFinalizado){
           console.log("ateletaFinalizado", ateletaFinalizado);
-
-          const oleadaIniciada = this.oleadas.find(item => item.no_oleada === ateletaFinalizado.no_oleada);
-          console.log("oleadaIniciada", oleadaIniciada);
           
-          if(oleadaIniciada){
-            if(ateletaFinalizado.estado == 'EN_COMPETENCIA'){
+          if(ateletaFinalizado.estado == 'EN_COMPETENCIA'){
               alertify.set('notifier','position', 'top-right');
               alertify.success('El atleta ' + ateletaFinalizado.no_atleta + " ha finalizado.", 5);
               ateletaFinalizado.estado = 'FINALIZADO';
               ateletaFinalizado.tiempo_competencia = formatDate(new Date(new Date), 'yyyy-MM-dd HH:mm:ss.SSS-05:00', 'en-US')
-              console.log("ateletaFinalizado", ateletaFinalizado);
-              
+
               this.asignarTiempoAtleta(ateletaFinalizado)
             }else{
               alertify.set('notifier','position', 'top-right');
               alertify.warning('El atleta ya había finalizado.', 3);
             }
-          }else{
-            alertify.set('notifier','position', 'top-right');
-            alertify.warning('La oleada #' + ateletaFinalizado.no_oleada + " del atleta " + ateletaFinalizado.no_atleta + " no ha sido iniciada!", 4);
-          }
-          }else{
-            alertify.set('notifier','position', 'top-right');
-            alertify.warning('Número de atleta no encontrado!', 3);
+        }else{
+          alertify.set('notifier','position', 'top-right');
+          alertify.warning('Número de atleta no encontrado!', 3);
         }
       }
     }
   }
 
-  updateAtleta(atleta:Atleta){
+  updateAtleta(atleta:Atleta, swMensaje?:boolean){
     console.log("update Atleta");
     console.log("atleta.", atleta)
 
@@ -310,8 +264,10 @@ export class ShowCompetenciaComponent implements OnInit {
         next: (data: any) => {
           console.log("data", data);
           if(data?.response == 'OK'){
-            alertify.set('notifier','position', 'top-right');
-            alertify.success('Atleta guardado con exito!',2);
+            if(!swMensaje){
+              alertify.set('notifier','position', 'top-right');
+              alertify.success('Atleta guardado con exito!',2);
+            }
           }
         },
         error: (err) => {
@@ -325,6 +281,9 @@ export class ShowCompetenciaComponent implements OnInit {
   }
 
   asignarTiempoAtleta(atleta:Atleta){
+    console.log("asignarTiempoAtleta");
+    console.log("atleta.", atleta)
+
     this.atletaService.asignarTiempoAtleta(atleta)
       .subscribe({
         next: (data: any) => {
@@ -379,5 +338,164 @@ export class ShowCompetenciaComponent implements OnInit {
           
         }
       });    
+  }
+
+  async asignarOleada(categoria:Categoria){
+    console.log("categoria", categoria);
+    
+    let noAtleta: string = '';
+    const { value: no_oleada, isConfirmed } = await Swal.fire({
+      title: 'Oleada',
+      text: `Ingresa el número de ateltas por oleadas en la categoría ` + categoria.nombre,
+      input: 'text',
+      inputLabel: 'Número de oleada',
+      inputPlaceholder: "",
+      inputValue: noAtleta,
+      showCancelButton: true,
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: "Cancelar",
+      inputValidator: (value) => {
+          if (!value) {
+              return 'Debes ingresar el número de atletas por oleada.'
+          }
+      }
+    });
+
+    if (isConfirmed) {
+      if (no_oleada) {
+        categoria.no_oleada = Number(no_oleada);
+        
+        this.categoriaService.updateCategoria(categoria)
+          .subscribe({
+            next: (data: any) => {
+              console.log("data", data);
+              if(data?.response == 'OK'){
+                alertify.set('notifier','position', 'top-right');
+                alertify.success('Categoría actualizada con exito!', 4);
+              }
+            },
+            error: (err) => {
+              alertify.set('notifier','position', 'top-right');
+              alertify.error(`${err?.errorDescription}`, 4);
+            },
+          });
+      }
+    }
+  }
+
+  async asignarAtleta(atleta:Atleta){
+    console.log("atleta", atleta);
+
+    let noAtleta: string = '';
+    const { value: no_oleada, isConfirmed } = await Swal.fire({
+      title: 'Asignar atleta',
+      text: `Ingresa el número de oleada para ` + atleta.nombre,
+      input: 'text',
+      inputLabel: 'Número de oleada',
+      inputPlaceholder: "",
+      inputValue: noAtleta,
+      showCancelButton: true,
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: "Cancelar",
+      inputValidator: (value) => {
+          if (!value) {
+              return 'Debes ingresar el número de la oleada.'
+          }
+      }
+    });
+
+    if (isConfirmed) {
+      if (no_oleada) {
+        const categoriafind = this.categorias.find(item => item.id === atleta.categoria_id);
+        console.log("categoriafind", categoriafind);
+        if(categoriafind){
+          if(Number(no_oleada) > 0 && Number(no_oleada) <= categoriafind?.no_oleada){
+            // debugger
+            if(this.arrayFaltanteCateg[categoriafind.nombre][Number(no_oleada)] > 0) {
+              atleta.no_oleada = Number(no_oleada);
+              this.arrayFaltanteCateg[categoriafind.nombre][Number(no_oleada)] = this.arrayFaltanteCateg[categoriafind.nombre][Number(no_oleada)] - 1;
+      
+              this.atletaService.updateAtleta(atleta)
+                .subscribe({
+                  next: (data: any) => {
+                    console.log("data", data);
+                    if(data?.response == 'OK'){
+                      alertify.set('notifier','position', 'top-right');
+                      alertify.success('Competencia creada con exito!',2);
+                    }
+                  },
+                  error: (err) => {
+                    alertify.set('notifier','position', 'top-right');
+                    alertify.error(`${err?.errorDescription}`, 4);
+                  },
+                });
+            }else{
+              alertify.set('notifier','position', 'top-right');
+              alertify.warning('La oleada ' + no_oleada + ' para la categoría ' + categoriafind.nombre + ' ya está completa!', );
+            }
+          }else{
+            alertify.set('notifier','position', 'top-right');
+            alertify.warning('La oleada seleccionada no existe en categoría',2);
+          }
+        }else{
+          alertify.set('notifier','position', 'top-right');
+          alertify.warning('No existe categoría!',2);
+        }
+      }
+    }
+  }
+
+  calcularAleatorio(){
+    Swal.fire({
+      title: 'Calcular oleadas aleatoriamente',
+      text: `Está seguro que desea calcular oleadas aleatoriamente?`,
+      //icon: 'question',
+      showCancelButton: true,
+      showConfirmButton: true,
+      cancelButtonColor: '',
+      confirmButtonText: 'Aceptar',
+      confirmButtonColor: '#1FAEEF',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.value) {
+        let swLimiteOleada = false;
+        let swFinOleadas = false;
+        this.atletasList.forEach(atleta => {
+          if(atleta.no_oleada == null){
+            const category = this.categorias.find(item => item.id === atleta.categoria_id && item.no_oleada != null);
+            console.log("category", category);
+            
+            if(category){
+              // if(category.no_oleada != null){
+                let sw = true;
+                while (sw) {
+                  const aleat =  Number(Math.floor(Math.random() * (this.arrayFaltanteCateg[category.nombre]?.length - 1))+1)
+                  console.log("this.arrayFaltanteCateg[category.nombre][aleat]", this.arrayFaltanteCateg[category.nombre][aleat]);
+                  
+                  if(this.arrayFaltanteCateg[category.nombre][aleat] > 0){
+                    atleta.no_oleada = aleat;
+                    this.arrayFaltanteCateg[category.nombre][aleat] = this.arrayFaltanteCateg[category.nombre][aleat] - 1;
+                    this.updateAtleta(atleta, true);
+                    sw = false;
+                    if(!swFinOleadas){
+                      alertify.set('notifier','position', 'top-right');
+                      alertify.success('Oleadas asignadas aleatoriamente con exito!', 2);
+                      swFinOleadas = true
+                    }
+                  } 
+                }
+            }else{
+              if(!swLimiteOleada){
+                    alertify.set('notifier','position', 'top-right');
+                    alertify.warning('Debe seleccionar el límite de oleadas por categorías!', 2);
+                    swLimiteOleada = true;
+                  }
+            }
+          }
+        });
+        
+      }
+    });
   }
 }

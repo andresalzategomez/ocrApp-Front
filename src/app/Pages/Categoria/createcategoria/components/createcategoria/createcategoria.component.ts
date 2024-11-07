@@ -37,16 +37,18 @@ export class CreatecategoriaComponent implements OnInit {
       nombre: ["", [Validators.required]],
       descripcion: [""],
       id_competencia: ["", [Validators.required]],
+      no_oleada: [null]
     });
   }
 
   onSubmit(){
     console.log("this.dataForm", this.dataForm.value);
     
-    // if(this.dataForm.invalid || !this.checkTerms){
-    //   console.log("Inválido");
-    //   return;
-    // }
+    if(this.dataForm.invalid){
+      alertify.set('notifier','position', 'top-right');
+      alertify.warning('Formulrio inválido!', 2);
+      return;
+    }
     this.saveCategoria();
   }
 
@@ -60,9 +62,11 @@ export class CreatecategoriaComponent implements OnInit {
           console.log("data", data);
           if(data?.response == 'OK'){
             alertify.set('notifier','position', 'top-right');
-            alertify.success('Categoría creada con exito!',2);
+            alertify.success('Categoría creada con exito!', 4);
 
-            this.router.navigate(['/home']);
+            this.dataForm.reset();
+
+            // this.router.navigate(['/home']);
           }
         },
         error: (err) => {

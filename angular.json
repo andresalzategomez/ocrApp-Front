@@ -32,7 +32,7 @@
               "querystring-es3/encode",
               "@algolia/events"
             ],
-            "outputPath": "dist/browser",
+            "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",

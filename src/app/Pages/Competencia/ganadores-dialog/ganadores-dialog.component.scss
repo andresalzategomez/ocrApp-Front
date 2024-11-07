@@ -1,0 +1,32 @@
+:host ::ng-deep .soloRead .mat-form-field.mat-form-field-appearance-fill .mat-form-field-wrapper .mat-form-field-flex  {
+    
+    background-color:rgb(211 211 211 / 0.5) !important;
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    min-height: 30px;
+    border-radius: 5px;
+    padding: 12px 12px !important;
+    border-width: 1px;
+    height: 38px;
+    width: fill !important;
+    --tw-border-opacity: 1 !important;
+    border-color: rgb(203 213 225 / var(--tw-border-opacity)) !important;
+    --tw-bg-opacity: 1 !important;
+    
+    --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05) !important;
+    --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color) !important;
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
+}
+
+.mat-row:nth-child(3) {
+    background-color: #B3F7B2;
+}
+
+.mat-row:nth-child(2) {
+    background-color: #A1E7A0;
+}
+
+.mat-row:nth-child(1) {
+    background-color: #8DD58C;
+}

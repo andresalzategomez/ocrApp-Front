@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CreatecompetenciaComponent } from './createcompetencia/components/createcompetencia/createcompetencia.component';
-import { CalculatecompetenciaComponent } from './calculatecompetencia/components/calculatecompetencia/calculatecompetencia.component';
 import { ListCompetenciaComponent } from './listcompetencia/components/listcompetencia/listcompetencia.component';
 import { ShowCompetenciaComponent } from './showcompetencia/components/showcompetencia/showcompetencia.component';
+import { IniciarcompetenciaComponent } from './iniciarcompetencia/iniciarcompetencia.component';
 
 const routes: Routes = [
   {
@@ -13,10 +13,10 @@ const routes: Routes = [
     component : CreatecompetenciaComponent,
   },
   {
-    path : 'calculate',
+    path : 'iniciar/:idCompetencia',
     // canActivate: [AuthGuard],
     // canActivateChild: [AuthGuard],
-    component : CalculatecompetenciaComponent,
+    component : IniciarcompetenciaComponent,
   },
   {
     path : 'list',

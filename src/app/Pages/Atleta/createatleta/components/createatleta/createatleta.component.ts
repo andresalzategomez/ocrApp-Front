@@ -22,6 +22,10 @@ export class CreateatletaComponent implements OnInit {
   competenciaList:Competencia[] = []
   atletasByCompetencia:Atleta[] = []
 
+  tipoDocumento:string[] = ['Cédula de ciudadanía', 'Tarjeta de identidad', 'Cédula de extranjería', 'Pasaporte', 'Permiso temporal de permanencia']
+
+  idCategoria:string = ""
+
   constructor(
     private formBuilder: FormBuilder,
     private atletaService: AtletaService,
@@ -39,11 +43,15 @@ export class CreateatletaComponent implements OnInit {
     this.dataForm = this.formBuilder.group({
       nombre: ["", [Validators.required]],
       documento: ["", [Validators.required]],
+      tipo_documento: ["", [Validators.required]],
       celular: [null, Validators.compose([Validators.required, Validators.maxLength(10),Validators.minLength(10), Validators.pattern('^[0-9]{10,10}$')])],
       email: ["", [Validators.required, Validators.email, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,20}$")]],
-      categoria: ["", [Validators.required]],
-      competencia: ["", [Validators.required]],
+      club: ["", [Validators.required]],
+      categoria_id: ["", [Validators.required]],
+      competencia_id: ["", [Validators.required]],
       no_atleta: [""],
+      no_oleada: [""],
+      // estado:["EN_COMPETENCIA"]
     });
   }
 
@@ -124,7 +132,7 @@ export class CreateatletaComponent implements OnInit {
         next: (data: Atleta[]) => {
           this.atletasByCompetencia = data
           console.log("data Atleta", data);
-          this.dataForm.get('no_atleta')?.setValue((this._decimalPipe.transform((data.length + 1), '3.0-0')?.toString()))
+          this.dataForm.get('no_atleta')?.setValue(this._decimalPipe.transform((data.length + 1), '3.0-0')?.toString())
           
         },
         error: (err) => {
@@ -141,7 +149,15 @@ export class CreateatletaComponent implements OnInit {
     console.log("element", element);
     
     this.getCategoriaByCompetenciaId(element.id)
-    this.getCountAtletasByCompetencia(element.id)
+    // this.getCountAtletasByCompetencia(element.id)
+  }
+
+  selectCategoria(element){
+    console.log("categoria", element);
+    this.idCategoria = element.id.toString()
+
+    this.getCategoriaByCompetenciaId(element.id_competencia)
+    this.getCountAtletasByCompetencia(element.id_competencia)
   }
 
   validarCedula(){

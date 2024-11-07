@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ShowCompetenciaComponent } from './showcompetencia.component';
 
-describe('CalculatecompetenciaComponent', () => {
+describe('ShowcompetenciaComponent', () => {
   let component: ShowCompetenciaComponent;
   let fixture: ComponentFixture<ShowCompetenciaComponent>;
 

@@ -1,0 +1,140 @@
+<div class="m-3" fxLayoutAlign="space-between center">
+    <div class="title">
+       <h3 class="mb-0">{{competencia?.nombre}}</h3>
+       <h4 class="mb-0">{{competencia?.fecha}}</h4>
+    </div>
+</div>
+
+<div>
+    <div class="m-3" fxLayoutJustify="space-end" fxLayoutAlign="space-between end">
+        <div class="title">
+            <h5 class="mb-0 h5">Categorías</h5>
+        </div>
+    </div>
+
+    <ng-container class="m-3" *ngIf="categorias && categorias.length >= 0; else elseBlock">
+        <ng-container>
+        <div fxLayout="row wrap">
+            <div fxFlex.gt-md="100" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                <div class="product-list">
+                    <mat-card class="pt-0">
+                    <div class="overflow-hidden">
+                        <div class="table-responsive-x product-list-table">         
+                            <table class="w-100 table-scroll-wrap" mat-table [dataSource]="categorias" matSort>
+                                <ng-container matColumnDef="nombre">
+                                    <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+                                    <td class="text-nowrap px-3" mat-cell *matCellDef="let element">{{element.nombre}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="descripcion">
+                                    <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</th>
+                                    <td class="text-nowrap product-name" mat-cell *matCellDef="let element"><span>{{element.descripcion}}</span></td>
+                                </ng-container>
+                                <ng-container matColumnDef="oleadas">
+                                    <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef mat-sort-header>No. Oleadas</th>
+                                    <td class="text-nowrap product-name" mat-cell *matCellDef="let element"><span>{{element.no_oleada}}</span></td>
+                                </ng-container>
+                                <ng-container matColumnDef="action">
+                                    <th class="px-3 text-nowrap" mat-header-cell *matHeaderCellDef> Action </th>
+                                    <td class="px-3 text-nowrap" mat-cell *matCellDef="let element;let i = index;">
+                                        <a (click)="asignarOleada(element)">
+                                            <i class="fa fa-edit fa-md action-table text-[#009CD7] pr-3" matTooltip="Asignar # oleada"></i>
+                                        </a>
+                                        <!-- <a routerLink="/vacunacion/vacunacion/show/{{element.id}}">
+                                            <i class="fa fa-play fa-md action-table text-[#009CD7] pr-3" matTooltip="Iniciar"></i>
+                                        </a> -->
+                                    </td>
+                                </ng-container>     
+                                <tr mat-header-row *matHeaderRowDef="displayedCategoryColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedCategoryColumns"></tr>
+                            </table>  
+                        </div>
+                    </div>   
+                    <!-- product-list-tabel-->
+                    <mat-paginator [pageSizeOptions]="[15, 30, 45, 60]"></mat-paginator>
+                    </mat-card>
+                </div>
+                <!-- product-list-->
+            </div> 
+        </div>
+        </ng-container>
+    </ng-container>
+    <ng-template class="m-3" #elseBlock>
+        <h5 class="ml-5">No product found</h5>
+    </ng-template>
+</div>
+
+<div class="mt-5">
+    <div class="m-3" fxLayoutJustify="space-end" fxLayoutAlign="space-between end">
+    <div class="title">
+        <h5 class="mb-0 h5">Atletas</h5>
+    </div>
+    <div>
+            <button class="button-lg mb-3" (click)="calcularAleatorio()" 
+                style="background: #9AD135;" mat-flat-button>
+                Calcular Aleatorio
+            </button>
+            <!-- <button *ngIf="competenciaFinalizada" class="button-lg mb-3" (click)="verGanadores()" 
+                style="background: #9AD135;" mat-flat-button [disabled]="!competenciaIniciada">
+                Calcular ganadores
+            </button> -->
+        </div>
+    </div>
+
+    <ng-container class="m-3" *ngIf="atletasList && atletasList.length >= 0; else elseBlock">
+        <ng-container>
+        <div fxLayout="row wrap">
+            <div fxFlex.gt-md="100" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                <div class="product-list">
+                    <mat-card class="pt-0">
+                    <div class="overflow-hidden">
+                        <div class="table-responsive-x product-list-table">         
+                            <table class="w-100 table-scroll-wrap" mat-table [dataSource]="atletasList" matSort>
+                                <ng-container matColumnDef="no_atleta">
+                                    <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef mat-sort-header>No Atleta</th>
+                                    <td class="text-nowrap px-3" mat-cell *matCellDef="let element">{{element.no_atleta}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="nombre">
+                                    <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+                                    <td class="text-nowrap product-name" mat-cell *matCellDef="let element"><span>{{element.nombre}}</span></td>
+                                </ng-container>
+                                <ng-container matColumnDef="documento">
+                                    <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef mat-sort-header>Documento</th>
+                                    <td class="text-nowrap product-name" mat-cell *matCellDef="let element"><span>{{element.documento}}</span></td>
+                                </ng-container>
+                               <ng-container matColumnDef="categoria">
+                                    <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef mat-sort-header>Categoria</th>
+                                    <td class="text-nowrap px-3" mat-cell *matCellDef="let element">{{changeCategoria(element.categoria_id)}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="oleada">
+                                    <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef mat-sort-header>No. Oleadas</th>
+                                    <td class="text-nowrap product-name" mat-cell *matCellDef="let element"><span>{{element.no_oleada}}</span></td>
+                                </ng-container>
+                                <ng-container matColumnDef="action">
+                                <th class="px-3 text-nowrap" mat-header-cell *matHeaderCellDef> Action </th>
+                                <td class="px-3 text-nowrap" mat-cell *matCellDef="let element;let i = index;">
+                                    <a (click)="asignarAtleta(element)">
+                                        <i class="fa fa-edit fa-md action-table text-[#009CD7] pr-3" matTooltip="Asignar oleada"></i>
+                                    </a>
+                                    <!-- <a routerLink="/vacunacion/vacunacion/show/{{element.id}}">
+                                        <i class="fa fa-play fa-md action-table text-[#009CD7] pr-3" matTooltip="Iniciar"></i>
+                                    </a> -->
+                                </td>
+                                </ng-container>     
+                                <tr mat-header-row *matHeaderRowDef="displayedAtletaColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedAtletaColumns"></tr>
+                            </table>  
+                        </div>
+                    </div>   
+                    <!-- product-list-tabel-->
+                    <mat-paginator [pageSizeOptions]="[15, 30, 45, 60]"></mat-paginator>
+                    </mat-card>
+                </div>
+                <!-- product-list-->
+            </div> 
+        </div>
+        </ng-container>
+    </ng-container>
+    <ng-template class="m-3" #elseBlock>
+        <h5 class="ml-5">No product found</h5>
+    </ng-template>
+</div>

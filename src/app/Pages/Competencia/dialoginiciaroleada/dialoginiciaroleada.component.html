@@ -1,0 +1,91 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Main -->
+    <div class="flex-auto p-5 sm:p-5">
+        <!-- CONTENT -->
+        <div class="border-2 border-gray rounded-2xl">
+            <div class="w-full rounded mx-auto bg-white py-5 px-5 lg:px-5 shadow-xl mb-1">
+                <form *ngIf="dataForm" [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+                    <div class="md:w-1/2 group inline-flex relative sm:w-full">
+                        <h2 class="text-base font-bold text-left">
+                            Iniciar Oelada
+                        </h2>
+                    </div>
+
+                    <!-- Separator -->
+                    <div class="flex mt-2 pb-4 w-full">
+                        <div class="mt-px border-t w-full"></div>
+                    </div>
+
+                    <!-- categoria -->
+                    <div class="md:w-1/4 sm:w-full w-100 relative z-0 mb-2 px-2 group inline-flex ">
+                        <mat-form-field class="w-full">
+                            <mat-label class="tracking-wide text-black  text-sm font-bold mb-2">
+                                Categoria - <span
+                                    class="text-sm  text-red-700"> Obligatorio</span>
+                            </mat-label>
+                            <mat-select class="w-100" *ngIf="data.categoria" style="width: 100%"
+                                formControlName="categoria" (selectionChange)="changeCategoria($event)">
+                                <mat-option>Seleccione una opción</mat-option>
+                                <mat-option *ngFor="let item of data.categoria" [value]="item">
+                                    {{item.nombre}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="dataForm.get('categoria').hasError('required')">
+                                El campo no puede estar vacío
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- oleada -->
+                    <div class="md:w-1/4 sm:w-full w-100 relative z-0 mb-2 px-2 group inline-flex ">
+                        <mat-form-field class="w-full">
+                            <mat-label class="tracking-wide text-black  text-sm font-bold mb-2">
+                                Oleada - <span
+                                    class="text-sm  text-red-700"> Obligatorio</span>
+                            </mat-label>
+                            <mat-select class="w-100" *ngIf="oleadas" style="width: 100%"
+                                formControlName="oleada">
+                                <mat-option>Seleccione una opción</mat-option>
+                                <mat-option *ngFor="let item of oleadas" [value]="item">
+                                    {{item}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="dataForm.get('oleada').hasError('required')">
+                                El campo no puede estar vacío
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+
+                    <!-- Separator -->
+                    <div class="flex mt-2 mb-2 pb-5 w-full">
+                        <div class="mt-px border-t w-full"></div>
+                    </div>
+
+                    <!-- Botón para enviar el formulario -->
+                    <div class="flex justify-end px-2 py-0 pb-2 w-full">
+                        <!-- Botón para cancelar el formulario -->
+                        <div class="md:w-1/4 sm:w-full w-100 relative z-0 mb-2 px-2 group inline-flex justify-end">
+                            <button type="button"
+                                class="bg-secondary text-sm font-semibold py-2 px-2 border border-solid text-[#009CD7] border-[#009CD7] rounded-full"
+                                (click)="goBack()">
+                                <mat-label>Cancelar</mat-label>
+                            </button>
+                            <span class="px-4"></span>
+                            <button mat-flat-button type="submit"
+                                class="bg-primary text-white text-sm font-semibold py-2 px-2 rounded-full hover:bg-[#FF8403]">
+                                <span *ngIf="!dataForm.disabled">
+                                    Guardar
+                                </span>
+                                <mat-progress-spinner *ngIf="dataForm.disabled" [diameter]="24"
+                                    [mode]="'indeterminate'">
+                                </mat-progress-spinner>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

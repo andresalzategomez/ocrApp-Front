@@ -1,0 +1,10 @@
+.descripcionInput{
+    left: 10px;
+    bottom: 30px;
+}
+
+@media screen and (max-width: 960px) {
+    .descripcionInput{
+        bottom: 0px;
+    }
+}

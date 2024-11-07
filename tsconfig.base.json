@@ -22,6 +22,7 @@
     "fullTemplateTypeCheck": true,
     "allowEmptyCodegenFiles": true,
     "preserveWhitespaces": true,
-    "annotationsAs": "decorators"
+    "annotationsAs": "decorators",
+    "allowSyntheticDefaultImports": true,
   }
 }
