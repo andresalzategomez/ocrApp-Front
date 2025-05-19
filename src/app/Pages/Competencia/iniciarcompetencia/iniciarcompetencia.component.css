@@ -10,7 +10,7 @@
     color: white;
     border-radius: 50%;
 
-    :hover{
+    &:hover{
         cursor: pointer;
     }
 }

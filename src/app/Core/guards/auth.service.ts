@@ -17,7 +17,7 @@ export class AuthService
     private _authenticated: boolean = false;
     
     /**URL API EntryPoint */
-    private apiUrl = environment.url_destino + environment.API_URL_USUARIO;
+    private apiUrl = (environment.url_destino + environment.API_URL_USUARIO);
     
     /**
      * Constructor

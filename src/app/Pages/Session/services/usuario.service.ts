@@ -16,7 +16,7 @@ export class UsuarioService {
         private _httpClient: HttpClient,
       ) {}
 
-      private apiUrl = environment.url_destino + environment.API_URL_USUARIO;
+      private apiUrl = (environment.url_destino + environment.API_URL_USUARIO);
 
       savePaciente(parameter: Usuario){
         return this._httpClient.post(`${this.apiUrl}/saveUsuario`, { 
