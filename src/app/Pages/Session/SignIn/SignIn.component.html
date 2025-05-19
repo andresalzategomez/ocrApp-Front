@@ -9,8 +9,27 @@
           </div>
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
               <mat-card class="sign-in-form form-margin">
-                  <h4>Iniciar sesión</h4>
-                  <embryo-SignIn></embryo-SignIn>
+                  <h3 class="primary-color">Iniciar sesión</h3>
+                  <form [formGroup]="dataForm"  (ngSubmit)="onSubmit()">
+                    <div class="mb-4">
+                      <mat-form-field class="w-100">
+                        <input matInput type="username" formControlName="username" placeholder="Nombre de usuario" required>
+                        <mat-error *ngIf="dataForm.get('username').hasError('required')">El campo no puede estar vacío</mat-error> 
+                        <mat-error class="mat-error" *ngIf="dataForm.controls['username'].errors?.['pattern']">Nombre de usuario inválido</mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="mb-4">
+                      <mat-form-field class="w-100">
+                        <input matInput type="password" formControlName="password" placeholder="Contraseña" required>
+                        <mat-error *ngIf="dataForm.get('password').hasError('required')">El campo no puede estar vacío</mat-error> 
+                      </mat-form-field>
+                    </div>
+                    <div class="mb-3">
+                      <span fxFlex></span> <a style="color: green;" [routerLink]="['/session/forgot-password']">¿Olvidó su contraseña?</a>
+                    </div>
+                    <button color="primary" class="button-lg mb-3" mat-raised-button>Entrar</button>
+                    <p>¿No tienes una cuenta? <a style="color: green;" [routerLink]="['/session/signup']">Registrate</a></p>
+                  </form>
                 </mat-card>
           </div>
         </div>

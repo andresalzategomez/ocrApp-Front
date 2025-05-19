@@ -9,13 +9,13 @@
                </i>
              </a>
            </div>
-           <!-- <embryo-SidebarMenu *ngFor="let item of menuItems.getMainMenu()" [item]="item"></embryo-SidebarMenu> -->
+           <embryo-SidebarMenu *ngFor="let item of menuItems.getMainMenu('')" [item]="item"></embryo-SidebarMenu>
          </mat-nav-list>
       </mat-sidenav>
-         <HeaderOne></HeaderOne>
+         <HeaderTwo></HeaderTwo>
       <div class="main">
          <router-outlet (activate)="onActivate($event)"></router-outlet>
       </div>
-      <!-- <FooterOne></FooterOne> -->
+      <FooterOne></FooterOne>
    </mat-sidenav-container>
 </div>

@@ -57,8 +57,75 @@ export class CategoriaService {
   }
 
 
+  getCompetenciaById(idCompetencia){
+    return this._httpClient.post(`${this.apiUrl}/getCompetenciaById`, { 
+      "id": idCompetencia,
+      "tenant": environment.tenant
+    })
+    .pipe(
+    catchError((error) => {
+      console.error('error', error);
+      if (error.status === 200) return error.message;
+    }),
+    retry(3),
+      map((data: any) => {
+        if (data.response === 'OK') return data.competencia;
+      })
+    );	
+  }
+
+
   getCompetenciasInicio(){
     return this._httpClient.post(`${this.apiUrl}/getCompetenciasInicio`, { 
+      "tenant": environment.tenant
+    })
+    .pipe(
+    catchError((error) => {
+      console.error('error', error);
+      if (error.status === 200) return error.message;
+    }),
+    retry(3),
+      map((data: any) => {
+        if (data.response === 'OK') return data.competencia;
+      })
+    );	
+  }
+
+
+  getCompetenciasPorAprobar(){
+    return this._httpClient.post(`${this.apiUrl}/getCompetenciasPorAprobar`, { 
+      "tenant": environment.tenant
+    })
+    .pipe(
+    catchError((error) => {
+      console.error('error', error);
+      if (error.status === 200) return error.message;
+    }),
+    retry(3),
+      map((data: any) => {
+        if (data.response === 'OK') return data.competencia;
+      })
+    );	
+  }
+
+  getCompetenciasPorAprobarLiga(){
+    return this._httpClient.post(`${this.apiUrl}/getCompetenciasPorAprobarLiga`, { 
+      "tenant": environment.tenant
+    })
+    .pipe(
+    catchError((error) => {
+      console.error('error', error);
+      if (error.status === 200) return error.message;
+    }),
+    retry(3),
+      map((data: any) => {
+        if (data.response === 'OK') return data.competencia;
+      })
+    );	
+  }
+
+  getCompetenciasFinalizadas(){
+    return this._httpClient.post(`${this.apiUrl}/getCompetenciasFinalizadas`, { 
       "tenant": environment.tenant
     })
     .pipe(
@@ -92,6 +159,42 @@ export class CategoriaService {
   getCategoriaByCompetencia(idCompetencia){
     return this._httpClient.post(`${this.apiUrl}/getCategoriaByCompetencia`, { 
       "idCompetencia": idCompetencia,
+      "tenant": environment.tenant
+    })
+    .pipe(
+    catchError((error) => {
+      console.error('error', error);
+      if (error.status === 200) return error.message;
+    }),
+    retry(3),
+      map((data: any) => {
+        if (data.response === 'OK') return data.categoria;
+      })
+    );	
+  }
+
+  cambiarAprobadoLiga(aprobado, id){
+    return this._httpClient.post(`${this.apiUrl}/cambiarAprobadoLiga`, { 
+      "id": id,
+      "aprobado": aprobado,
+      "tenant": environment.tenant
+    })
+    .pipe(
+    catchError((error) => {
+      console.error('error', error);
+      if (error.status === 200) return error.message;
+    }),
+    retry(3),
+      map((data: any) => {
+        if (data.response === 'OK') return data.categoria;
+      })
+    );	
+  }
+
+  cambiarAprobado(aprobado, id){
+    return this._httpClient.post(`${this.apiUrl}/cambiarAprobado`, { 
+      "id": id,
+      "aprobado": aprobado,
       "tenant": environment.tenant
     })
     .pipe(

@@ -22,9 +22,10 @@ export class CreateatletaComponent implements OnInit {
   competenciaList:Competencia[] = []
   atletasByCompetencia:Atleta[] = []
 
-  tipoDocumento:string[] = ['Cédula de ciudadanía', 'Tarjeta de identidad', 'Cédula de extranjería', 'Pasaporte', 'Permiso temporal de permanencia']
+  tipoDocumento:string[] = ['Cédula de ciudadanía', 'Tarjeta de identidad', 'Cédula de extranjería', 'Pasaporte', 'Permiso temporal de permanencia'];
 
-  idCategoria:string = ""
+  idCategoria:string = "";
+  userLogin:any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,23 +36,22 @@ export class CreateatletaComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.userLogin = JSON.parse(localStorage.getItem('authenticatedData')|| '')
     this.createForm();
     this.findCompetenciasInicio()
   }
 
   createForm(){
     this.dataForm = this.formBuilder.group({
-      nombre: ["", [Validators.required]],
-      documento: ["", [Validators.required]],
-      tipo_documento: ["", [Validators.required]],
-      celular: [null, Validators.compose([Validators.required, Validators.maxLength(10),Validators.minLength(10), Validators.pattern('^[0-9]{10,10}$')])],
-      email: ["", [Validators.required, Validators.email, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,20}$")]],
-      club: ["", [Validators.required]],
-      categoria_id: ["", [Validators.required]],
-      competencia_id: ["", [Validators.required]],
-      no_atleta: [""],
+      nombre_atleta: ["", [Validators.required]],
+      talla: ["", [Validators.required]],
+      tiempo_competencia: [null],
+      id_categoria: ["", [Validators.required]],
+      id_competencia: ["", [Validators.required]],
+      id_usuario: [this.userLogin.id, [Validators.required]],
+      no_atleta: ["", [Validators.required]],
       no_oleada: [""],
-      // estado:["EN_COMPETENCIA"]
+      estado:["EN_COMPETENCIA"]
     });
   }
 
@@ -72,6 +72,29 @@ export class CreateatletaComponent implements OnInit {
     console.log("this.dataForm.", this.dataForm.value)
 
     this.atletaService.saveAtleta(this.dataForm.value)
+      .subscribe({
+        next: (data: any) => {
+          console.log("data atleta", data);
+          if(data?.response == 'OK'){
+            // setTimeout(() => {
+              this.enviarEmail();
+            // }, 5000);
+          }
+        },
+        error: (err) => {
+          // this.showAlert = true;
+          // this.alert = {
+          //   type   : 'error',
+          //   message: `${err.errorDescription}`
+          // };
+        },
+      });
+  }
+
+  async enviarEmail(){
+    const subject:string = '¡Inscripción Confirmada a la Carrera OCR!';
+    const categ = this.categoriaList.find(item => item.id === this.dataForm.get('id_categoria')?.value);
+    await this.atletaService.enviarEmail(this.userLogin, this.dataForm.value, this.competenciaList[0], categ?.nombre, false, subject)
       .subscribe({
         next: (data: any) => {
           console.log("data", data);
@@ -162,12 +185,12 @@ export class CreateatletaComponent implements OnInit {
 
   validarCedula(){
     let existAtleta:boolean = false;
-    const findAtleta = this.atletasByCompetencia.find(item => item.documento === this.dataForm.get('documento')?.value);
+    const findAtleta = this.atletasByCompetencia.find(item => item.id_usuario === this.dataForm.get('id_usuario')?.value);
     console.log("findAtleta", findAtleta);
     if(findAtleta){
       existAtleta = true;
       alertify.set('notifier','position', 'top-right');
-      alertify.warning('El atleta con documento ' + findAtleta.documento + " ya se encuentra registrado en esta competencia.", 5);
+      alertify.warning('El atleta ' + this.userLogin?.nombre + " ya se encuentra registrado en esta competencia.", 5);
     }
     return existAtleta;
   }

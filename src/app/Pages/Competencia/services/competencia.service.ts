@@ -18,15 +18,13 @@ export class CompetenciaService {
   saveCompetencia(parameter: Competencia){
     return this._httpClient.post(`${this.apiUrl}/createCompetencia`, { 
       "nombre": parameter.nombre,
-      "lugar": parameter.lugar,
+      "departamento": parameter.departamento,
+      "municipio": parameter.municipio,
       "direccion": parameter.direccion,
-      "club": parameter.club,
-      "organizador": parameter.organizador,
-      "celular_organizador": parameter.celular_organizador,
-      "documento_organizador": parameter.documento_organizador,
-      "email_organizador": parameter.email_organizador,
+      "id_usuario": parameter.id_usuario,
       "fecha": parameter.fecha,
       "estado": parameter.estado,
+      "oficialLiga": parameter.oficialLiga,
       "tenant": environment.tenant
     })
     .pipe(
@@ -45,17 +43,16 @@ export class CompetenciaService {
     return this._httpClient.post(`${this.apiUrl}/updateCompetencia`, { 
       "id": parameter.id,
       "nombre": parameter.nombre,
-      "lugar": parameter.lugar,
+      "departamento": parameter.departamento,
+      "municipio": parameter.municipio,
       "direccion": parameter.direccion,
-      "club": parameter.club,
-      "organizador": parameter.organizador,
-      "celular_organizador": parameter.celular_organizador,
-      "documento_organizador": parameter.documento_organizador,
-      "email_organizador": parameter.email_organizador,
       "fecha": parameter.fecha,
       "hora_inicio": parameter.hora_inicio,
       "hora_final": parameter.hora_final,
       "estado": parameter.estado,
+      "id_usuario": parameter.id_usuario,
+      "aprobado": parameter.aprobado,
+      "oficialLiga": parameter.oficialLiga,
       "tenant": environment.tenant
     })
     .pipe(

@@ -1,11 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NgAisModule } from 'angular-instantsearch';
 import { SessionRoutes } from './Session.routing';
-import { GlobalModule } from '../../Global/Global.module';
-import { TemplatesModule } from '../../Templates/Templates.module';
-
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -35,7 +32,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RegisterComponent } from './Register/Register.component';
 import { SignInComponent } from './SignIn/SignIn.component';
 import { ForgotPasswordComponent } from './ForgotPassword/ForgotPassword.component';
-import { ThankYouComponent } from './ThankYou/ThankYou.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -68,8 +64,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
       MatRadioModule,
       MatDialogModule,
       MatGridListModule,
-      GlobalModule,
-      TemplatesModule,
       NgAisModule,
       MatFormFieldModule,
       FormsModule,
@@ -78,8 +72,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
    declarations: [
       RegisterComponent,
       SignInComponent,
-      ThankYouComponent,
       ForgotPasswordComponent
-   ]
+   ],
+   providers:[DatePipe]
 })
 export class SessionModule { }

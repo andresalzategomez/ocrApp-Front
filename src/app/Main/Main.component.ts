@@ -9,6 +9,8 @@ import { Directionality } from '@angular/cdk/bidi';
 import { MediaChange } from '@angular/flex-layout';
 import { TranslateService } from '@ngx-translate/core';
 import { Meta, Title } from "@angular/platform-browser";
+import { AuthService } from '../Core/guards/auth.service';
+import { UsuarioService } from '../Pages/Session/services/usuario.service';
 
 @Component({
   selector: 'app-main',
@@ -29,7 +31,9 @@ export class MainComponent implements OnInit {
                public translate: TranslateService,
                private router: Router,
                meta: Meta, title: Title,
-               private activatedRoute: ActivatedRoute) {
+               private activatedRoute: ActivatedRoute,
+               private _authService: AuthService, 
+            private usuarioService: UsuarioService) {
       title.setTitle('Embryo - Angular 14 Material Design eCommerce Template');
 
       meta.addTags([
@@ -53,6 +57,10 @@ export class MainComponent implements OnInit {
    }
 
    ngOnInit() {
+      console.log("_authService", this._authService.authenticatedData);
+      
+      if(this._authService.accessToken != undefined && this._authService.accessToken != '') this.usuarioService._authenticated = true;
+      
       this.startTimer();
       document.getElementById('html').classList.remove("admin-panel");
       document.getElementById('html').classList.add("user-end");

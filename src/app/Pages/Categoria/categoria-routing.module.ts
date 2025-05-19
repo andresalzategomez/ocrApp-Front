@@ -4,7 +4,7 @@ import { CreatecategoriaComponent } from './createcategoria/components/createcat
 
 const routes: Routes = [
   {
-    path : 'create',
+    path : 'create/:idCompetencia',
     // canActivate: [AuthGuard],
     // canActivateChild: [AuthGuard],
     component : CreatecategoriaComponent,

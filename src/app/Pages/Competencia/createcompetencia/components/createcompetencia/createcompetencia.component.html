@@ -17,57 +17,39 @@
                       <input matInput type="text" formControlName="nombre" placeholder="Nombre" required>
                       <mat-error *ngIf="dataForm.get('nombre').hasError('required')">El campo no puede estar vacío</mat-error> 
                     </mat-form-field>
+                    
                     <mat-form-field class="w-100 mt-3">
                       <mat-select class="w-full overflow-hidden" formControlName="departamento" 
                           *ngIf="departamentoList" style="width: 100%" placeholder="Seleccione un departamento">
                         <mat-option>Seleccionar un departamento</mat-option>
-                        <mat-option *ngFor="let item of departamentoList" [value]="item" (click)="selectDepartamento(item)">
+                        <mat-option *ngFor="let item of departamentoList" [value]="item.name" (click)="selectDepartamento(item)">
                            {{item.name}}
                         </mat-option>
                       </mat-select>
                       <mat-error *ngIf="dataForm.get('departamento').hasError('required')">El campo no puede estar vacío</mat-error> 
                     </mat-form-field>
+
                     <mat-form-field *ngIf="municipiosSw" class="w-100 mt-3">
                       <mat-select class="w-full overflow-hidden" formControlName="municipio" 
                           *ngIf="municipiosSw" style="width: 100%" placeholder="Seleccione un municipio">
                         <mat-option>Seleccionar un municipio</mat-option>
-                        <mat-option *ngFor="let item of municipiosList" [value]="item">
+                        <mat-option *ngFor="let item of municipiosList" [value]="item.name">
                            {{item.name}}
                         </mat-option>
                       </mat-select>
                       <mat-error *ngIf="dataForm.get('municipio').hasError('required')">El campo no puede estar vacío</mat-error> 
                     </mat-form-field>
-                    <!-- <mat-form-field class="w-100 mt-3">
-                      <input matInput type="text" formControlName="lugar" placeholder="Lugar" required>
-                      <mat-error *ngIf="dataForm.get('lugar').hasError('required')">El campo no puede estar vacío</mat-error> 
-                    </mat-form-field> -->
+                    
                     <mat-form-field class="w-100 mt-3">
                       <input matInput type="text" formControlName="direccion" placeholder="Dirección" required>
                       <mat-error *ngIf="dataForm.get('direccion').hasError('required')">El campo no puede estar vacío</mat-error> 
                     </mat-form-field>
+
                     <mat-form-field class="w-100 mt-3">
-                      <input matInput type="text" formControlName="club" placeholder="Club" required>
+                      <input matInput type="text" disabled readonly formControlName="club" placeholder="Club">
                       <mat-error *ngIf="dataForm.get('club').hasError('required')">El campo no puede estar vacío</mat-error> 
                     </mat-form-field>
-                    <mat-form-field class="w-100 mt-3">
-                      <input matInput type="text" formControlName="organizador" placeholder="Nombre organizador" required>
-                      <mat-error *ngIf="dataForm.get('organizador').hasError('required')">El campo no puede estar vacío</mat-error> 
-                    </mat-form-field>
-                    <mat-form-field class="w-100 mt-3">
-                      <input matInput formControlName="celular_organizador" maxlength="10" minlength="10" placeholder="Celular organizador" required>
-                      <mat-error *ngIf="dataForm.get('celular_organizador').hasError('required')">El campo no puede estar vacío</mat-error> 
-                      <mat-error class="mat-error" *ngIf="dataForm.get('celular_organizador').hasError('minlength')">La cantidad de dígitos es mínimo 10</mat-error>
-                      <mat-error class="mat-error" *ngIf="dataForm.get('celular_organizador').hasError('maxlength')">La cantidad de dígitos es máximo 10</mat-error>
-                    </mat-form-field>
-                    <mat-form-field class="w-100 mt-3">
-                      <input matInput type="text" formControlName="documento_organizador" placeholder="Documento organizador" required>
-                      <mat-error *ngIf="dataForm.get('documento_organizador').hasError('required')">El campo no puede estar vacío</mat-error> 
-                    </mat-form-field>
-                    <mat-form-field class="w-100 mt-3">
-                      <input matInput type="email" formControlName="email_organizador" placeholder="Correo organizador" required>
-                      <mat-error *ngIf="dataForm.get('email_organizador').hasError('required')">El campo no puede estar vacío</mat-error> 
-                      <mat-error class="mat-error" *ngIf="dataForm.controls['email_organizador'].errors?.['pattern']">Correo inválido</mat-error>
-                    </mat-form-field>
+
                     <mat-form-field class="w-100 mt-3">
                       <input class="w-full text-black rounded" matInput [matDatepicker]="fecha" placeholder="Seleccione la fecha de competencia"
                         [min]="minDate" formControlName="fecha">

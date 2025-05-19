@@ -1,0 +1,16 @@
+.btnCircle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 2em;
+    width: 2em;
+    height: 2em;
+    background-color: #9AD135;
+    border: none;
+    color: white;
+    border-radius: 50%;
+
+    :hover{
+        cursor: pointer;
+    }
+}

@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { Route} from '@angular/router';
 
 import { MainComponent } from './Main/Main.component';
-import { HomeoneComponent } from './Pages/Home/HomeOne/HomeOne.component';
+import { HomeTwoComponent } from './Pages/Home/HomeTwo/HomeTwo.component';
 import { NotFoundComponent } from './Pages/NotFound/NotFound.component';
+import { AuthGuard } from './Core/guards/auth.guard';
 
 export const AppRoutes : Route[] = [
    {path : '', redirectTo: 'home', pathMatch: 'full',},
@@ -25,13 +26,13 @@ export const AppRoutes : Route[] = [
    },
    {
       path : '',
-      // canActivate: [NoAuthGuard],
-      // canActivateChild: [NoAuthGuard],
+      // canActivate: [AuthGuard],
+      // canActivateChild: [AuthGuard],
       component : MainComponent,
       children: [ 
          {
             path : 'home',
-            component : HomeoneComponent
+            component : HomeTwoComponent
          },
          {
             path: 'not-found',
@@ -49,13 +50,17 @@ export const AppRoutes : Route[] = [
             path: 'atleta',loadChildren: ()=>
             import('./Pages/Atleta/atleta.module').then (m => m.AtletaModule)
          },
+         {
+            path: 'session',loadChildren: ()=>
+            import('./Pages/Session/Session.module').then (m => m.SessionModule)
+         },
+         {
+            path: '',loadChildren: ()=>
+            import('./Pages/About/About.module').then( m=> m.AboutModule)
+         },
          // {
          //    path: 'cart',
          //    component: CartComponent
-         // },
-         // {
-         //    path: 'session',loadChildren: ()=>
-         //    import('./Pages/Session/Session.module').then (m => m.SessionModule)
          // },
          // {
          //    path: 'checkout',loadChildren: ()=>

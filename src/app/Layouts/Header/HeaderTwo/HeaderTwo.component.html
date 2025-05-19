@@ -1,0 +1,56 @@
+<mat-toolbar color="primary" class="header-v2">
+   <mat-toolbar-row class="header-v2-top">
+     <div class="container">
+       <div fxLayout="row wrap">
+         <div class="logo-site" fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="35" fxFlex.lg="25%" fxFlex.xl="25%">
+          <img src="../../../../assets/images/logo/logo.png" style="height: 100px; padding: 0.4em; min-width: 90px;" alt="">
+         </div>
+         <div fxFlex.sm="60" fxHide.xs="true" fxHide.sm="true" fxFlex.md="40" fxFlex.sm.hdie fxFlex.lg="60%" fxFlex.xl="60%" class="align-center"></div>
+         <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="25" fxFlex.lg="15%" fxFlex.xl="15%">
+            <span fxFlex></span>
+            <div class="list-flex user-tool">
+              <div style="display: flex; flex-direction: row;">
+                <div *ngIf="!usuarioService._authenticated" class="divLogin" [routerLink]="['/session/signin']">
+                  <p class="textLogin">Iniciar Sesión</p>
+                </div>
+                <div *ngIf="!usuarioService._authenticated" class="divSingup" [routerLink]="['/session/signup']">
+                  <p style="color: white; padding-left: 1em; padding-right: 1em;">Registrarse</p>
+                </div>
+              </div>
+              <button *ngIf="usuarioService._authenticated" mat-mini-fab class="log-in-user" [matMenuTriggerFor]="loginuser">
+                <img src="assets/images/log-in-user.jpg" width="250" height="250" alt="log-in-user">
+              </button>
+              <!-- log-in-user -->
+              <mat-menu #loginuser="matMenu">
+                <button mat-menu-item fxLayoutAlign="start center" [routerLink]="['/admin-panel/account/profile']"><i class="material-icons mr-1">account_circle</i> <span>Profile</span>
+                </button>
+                <button mat-menu-item [routerLink]="['/admin-panel/account/settings']"><i class="material-icons mr-1">settings</i><span>Account Settings</span></button>
+                <button mat-menu-item (click)="logOut()"><i class="material-icons mr-1">power_settings_new</i><span>Logout</span></button>
+              </mat-menu>
+            
+            </div>
+         </div>
+       </div>
+     </div>
+   </mat-toolbar-row>
+   <mat-toolbar-row class="header-v2-bottom main-menu-wrap">
+     <div class="container">
+       <div class="header-v2-bottom-inner">
+         <embryo-Menu></embryo-Menu>
+    
+       </div>
+     </div>
+   </mat-toolbar-row>
+   <mat-toolbar-row class="responsive-bar relative">
+         <div class="container">
+           <div fxLayoutAlign="end">
+          
+             <button class="responsive-toggle" mat-icon-button (click)="toggleSidebar()">
+               <i class="material-icons">menu</i>
+             </button>
+           </div>
+         </div>
+    </mat-toolbar-row>
+ </mat-toolbar>
+ <embryo-FixedHeader></embryo-FixedHeader>
+ 

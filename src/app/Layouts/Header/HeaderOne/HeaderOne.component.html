@@ -1,22 +1,25 @@
-<mat-toolbar class="header-v1" style="background:#9AD135;">
-  <!-- <mat-toolbar-row class="header-v1-top">
-    <div class="container">
-      <div fxLayout="row wrap" fxLayout="center center">
-        <div fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="50" fxFlex.lg="33%" fxFlex.xl="33%">
-          <span fxFlex></span>
+<mat-toolbar color="primary" class="header-v1">
+  <mat-toolbar-row class="header-v1-bottom main-menu-wrap">
+      <div class="container">
+        <div class="header-v1-bottom-inner">
+          <embryo-Menu></embryo-Menu>
         </div>
       </div>
-    </div>
-  </mat-toolbar-row> -->
-  <mat-toolbar-row class="header-v1-bottom main-menu-wrap">
-    <div class="container">
-      <div class="header-v1-bottom-inner">
-        <embryo-Menu></embryo-Menu>
-        <!-- <button class="responsive-toggle" mat-icon-button (click)="toggleSidebar()">
-          <i class="material-icons">menu</i>
-        </button> -->
+      <div fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="50" fxFlex.lg="33%" fxFlex.xl="33%">
+        <span fxFlex></span>
+        <div class="list-flex user-tool">
+          <button mat-mini-fab class="log-in-user" [matMenuTriggerFor]="loginuser">
+            <img src="assets/images/log-in-user.jpg" width="250" height="250" alt="log-in-user">
+          </button>
+          <!-- log-in-user -->
+          <mat-menu #loginuser="matMenu">
+            <button mat-menu-item fxLayoutAlign="start center" [routerLink]="['/admin-panel/account/profile']"><i class="material-icons mr-1">account_circle</i> <span>Profile</span>
+            </button>
+            <button mat-menu-item [routerLink]="['/admin-panel/account/settings']"><i class="material-icons mr-1">settings</i><span>Account Settings</span></button>
+          </mat-menu>
+          
+        </div>
       </div>
-    </div>
-  </mat-toolbar-row>
+    </mat-toolbar-row>
 </mat-toolbar>
 <embryo-FixedHeader></embryo-FixedHeader>

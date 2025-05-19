@@ -35,7 +35,7 @@ export class IniciarcompetenciaComponent implements OnInit {
 	atletasList:Atleta [] = []
 	popUpDeleteUserResponse : any;
 	showType	    				: string = 'list';
-	displayedAtletaColumns : string [] = ['nombre', 'documento','no_atleta', 'categoria', 'oleada', 'action'];
+	displayedAtletaColumns : string [] = ['nombre', 'no_atleta', 'categoria', 'oleada', 'action'];
 	displayedCategoryColumns : string [] = ['nombre', 'descripcion', 'oleadas', 'action'];
 	@ViewChild(MatPaginator) paginator : MatPaginator;
 	@ViewChild(MatSort) sort           : MatSort;
@@ -117,7 +117,7 @@ export class IniciarcompetenciaComponent implements OnInit {
         next: (data: Atleta[]) => {
           this.atletasList = data
           console.log("data", this.atletasList);
-          this.validarAteltasPorOleada();
+          this.validarAtletasPorOleada();
         },
         error: (err) => {
           // this.showAlert = true;
@@ -129,11 +129,11 @@ export class IniciarcompetenciaComponent implements OnInit {
       });
   }
 
-  validarAteltasPorOleada(){
-    this.categorias.forEach(elementCate => {
+  validarAtletasPorOleada(){
+    this.categorias?.forEach(elementCate => {
       let contAtletas = 0;
       this.atletasList.forEach(elementAtl => {
-        if(elementCate.id == elementAtl.categoria_id) contAtletas = contAtletas + 1;
+        if(elementCate.id == elementAtl.id_categoria) contAtletas = contAtletas + 1;
       });
       let oleadas = contAtletas / elementCate.no_oleada;
       if(!Number.isInteger(contAtletas / elementCate.no_oleada)) oleadas = Math.trunc(contAtletas / elementCate.no_oleada) + 1
@@ -146,7 +146,7 @@ export class IniciarcompetenciaComponent implements OnInit {
 
     this.atletasList.forEach(element => {
       if(element.no_oleada != null){
-        const categoria = this.categorias.find(item => item.id === element.categoria_id);
+        const categoria = this.categorias.find(item => item.id === element.id_categoria);
         if(categoria) this.arrayFaltanteCateg[categoria.nombre][element.no_oleada] = this.arrayFaltanteCateg[categoria.nombre][element.no_oleada] -1;
       }
     });
@@ -389,7 +389,7 @@ export class IniciarcompetenciaComponent implements OnInit {
     let noAtleta: string = '';
     const { value: no_oleada, isConfirmed } = await Swal.fire({
       title: 'Asignar atleta',
-      text: `Ingresa el número de oleada para ` + atleta.nombre,
+      text: `Ingresa el número de oleada para ` + atleta.nombre_atleta,
       input: 'text',
       inputLabel: 'Número de oleada',
       inputPlaceholder: "",
@@ -406,7 +406,7 @@ export class IniciarcompetenciaComponent implements OnInit {
 
     if (isConfirmed) {
       if (no_oleada) {
-        const categoriafind = this.categorias.find(item => item.id === atleta.categoria_id);
+        const categoriafind = this.categorias.find(item => item.id === atleta.id_categoria);
         console.log("categoriafind", categoriafind);
         if(categoriafind){
           if(Number(no_oleada) > 0 && Number(no_oleada) <= categoriafind?.no_oleada){
@@ -463,7 +463,7 @@ export class IniciarcompetenciaComponent implements OnInit {
         let swFinOleadas = false;
         this.atletasList.forEach(atleta => {
           if(atleta.no_oleada == null){
-            const category = this.categorias.find(item => item.id === atleta.categoria_id && item.no_oleada != null);
+            const category = this.categorias.find(item => item.id === atleta.id_categoria && item.no_oleada != null);
             console.log("category", category);
             
             if(category){

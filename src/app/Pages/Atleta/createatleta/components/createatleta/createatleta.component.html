@@ -14,40 +14,17 @@
                 <form *ngIf="dataForm" [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                   <div class="mb-4">
                     <mat-form-field class="w-100 mt-3">
-                      <input matInput type="text" formControlName="nombre" placeholder="Nombre" required>
-                      <mat-error *ngIf="dataForm.get('nombre').hasError('required')">El campo no puede estar vacío</mat-error> 
+                      <input matInput type="text" formControlName="nombre_atleta" placeholder="Nombre" required>
+                      <mat-error *ngIf="dataForm.get('nombre_atleta').hasError('required')">El campo no puede estar vacío</mat-error> 
                     </mat-form-field>
+
                     <mat-form-field class="w-100 mt-3">
-                      <mat-select class="w-full overflow-hidden" formControlName="tipo_documento" 
-                          *ngIf="competenciaList" style="width: 100%" placeholder="Seleccione un tipo de documento">
-                        <mat-option>Seleccionar un tipo de documento</mat-option>
-                        <mat-option *ngFor="let item of tipoDocumento" [value]="item">
-                           {{item}}
-                        </mat-option>
-                      </mat-select>
-                      <mat-error *ngIf="dataForm.get('tipo_documento').hasError('required')">El campo no puede estar vacío</mat-error> 
+                      <input matInput type="text" formControlName="talla" placeholder="Talla" required>
+                      <mat-error *ngIf="dataForm.get('talla').hasError('required')">El campo no puede estar vacío</mat-error> 
                     </mat-form-field>
+
                     <mat-form-field class="w-100 mt-3">
-                        <input matInput type="text" formControlName="documento" placeholder="Documento" required>
-                        <mat-error *ngIf="dataForm.get('documento').hasError('required')">El campo no puede estar vacío</mat-error> 
-                      </mat-form-field>
-                    <mat-form-field class="w-100 mt-3">
-                        <input matInput formControlName="celular" maxlength="10" minlength="10" placeholder="Celular" required>
-                        <mat-error *ngIf="dataForm.get('celular').hasError('required')">El campo no puede estar vacío</mat-error> 
-                        <mat-error class="mat-error" *ngIf="dataForm.get('celular').hasError('minlength')">La cantidad de dígitos es mínimo 10</mat-error>
-                        <mat-error class="mat-error" *ngIf="dataForm.get('celular').hasError('maxlength')">La cantidad de dígitos es máximo 10</mat-error>
-                    </mat-form-field>
-                    <mat-form-field class="w-100 mt-3">
-                      <input matInput type="email" formControlName="email" placeholder="Correo" required>
-                      <mat-error *ngIf="dataForm.get('email').hasError('required')">El campo no puede estar vacío</mat-error> 
-                      <mat-error class="mat-error" *ngIf="dataForm.controls['email'].errors?.['pattern']">Correo inválido</mat-error>
-                    </mat-form-field>
-                    <mat-form-field class="w-100 mt-3">
-                      <input matInput type="text" formControlName="club" placeholder="Club" required>
-                      <mat-error *ngIf="dataForm.get('club').hasError('required')">El campo no puede estar vacío</mat-error> 
-                    </mat-form-field>
-                    <mat-form-field class="w-100 mt-3">
-                        <mat-select class="w-full overflow-hidden" formControlName="competencia_id" 
+                        <mat-select class="w-full overflow-hidden" formControlName="id_competencia" 
                             *ngIf="competenciaList" style="width: 100%" placeholder="Seleccione una Competencia">
                           <mat-option>Seleccionar una Competencia</mat-option>
                           <mat-option *ngFor="let item of competenciaList" [value]="item.id" (click)="selectCompetencia(item)">
@@ -55,22 +32,23 @@
                           </mat-option>
                         </mat-select>
                     </mat-form-field>
+
                     <mat-form-field class="w-100 mt-3">
-                        <mat-select class="w-full overflow-hidden" formControlName="categoria_id" 
+                        <mat-select class="w-full overflow-hidden" formControlName="id_categoria" 
                           style="width: 100%" placeholder="Seleccione una Categoría">
                           <mat-option>Seleccionar una Categoría</mat-option>
                           <mat-option *ngFor="let item of categoriaList" [value]="item.id" (click)="selectCategoria(item)">
                              {{item.nombre}}
                           </mat-option>
                         </mat-select>
-                        <mat-error *ngIf="dataForm.get('categoria_id').hasError('required')">El campo no puede estar vacío</mat-error> 
+                        <mat-error *ngIf="dataForm.get('id_categoria').hasError('required')">El campo no puede estar vacío</mat-error> 
                     </mat-form-field>
 
                     <mat-form-field class="w-100 mt-3">
                         <input matInput type="text" formControlName="no_atleta" placeholder="Número de Atleta" required readonly>
                       </mat-form-field>
                   </div>
-                  <button class="button-lg mb-3" style="background: #9AD135;" mat-flat-button type="submit">
+                  <button class="button-lg mb-3" color="primary" mat-flat-button type="submit">
                     <span *ngIf="!dataForm.disabled">
                       Registrarse
                     </span>

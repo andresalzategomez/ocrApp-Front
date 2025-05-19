@@ -1,0 +1,50 @@
+<div class="inner-container">
+  <div class="Contact-page">
+    <div class="contact-map">
+      <div>
+        <agm-map [latitude]="mapOptions.lat" [longitude]="mapOptions.lng">
+            <agm-marker [latitude]="mapOptions.lat" [longitude]="mapOptions.lng" [iconUrl]="icon">
+              <agm-info-window>
+                  <div>
+                    <span>Cl. 40d #38-10</span>
+                  </div>
+              </agm-info-window>
+          </agm-marker>
+        </agm-map>
+      </div>
+    </div>
+    <div class="contact-info-wrapper">
+      <div class="container">
+        <div class="section-gap">
+          <div fxLayout="row wrap" class="col-gap">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
+              <div class="block-title ">
+                <h2>Información de Contacto</h2>
+                <h5 class="text-italic mb-4">Si tiene algún problema, sugerencias y comentarios, no dude en ponerse en contacto con nosotros. Elija nuestros servicios de comunicación. Nos encantará saber de usted.</h5> 
+              </div>
+              <div class="mb-4">
+                <h3>Teléfono</h3>
+                  <a href="tel:12345688">+57 313 6610612</a>
+              </div>
+              <div class="mb-4">
+                <h3>Correo</h3>
+                <a href="mailto:bryan.a.c@hotmail.com">bryan.a.c@hotmail.com</a>
+              </div>
+              <div class="mb-4">
+                <h3>Dirección</h3>
+                <p> Cl. 40d #38-10 </p>
+              </div>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
+              <!-- <div class="block-title ">
+                <h2>Write to Us</h2>
+              </div>
+              <embryo-ContactForm></embryo-ContactForm> -->
+              <img src="assets/images/contacus.jpg" width="1000" height="729" alt="Contáctanos">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

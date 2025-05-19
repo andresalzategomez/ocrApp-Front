@@ -2,8 +2,9 @@ import { Component, OnInit, HostBinding, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { TranslateService } from '@ngx-translate/core';
-
+import { AuthService } from '../../../Core/guards/auth.service';
 import { MenuItems } from '../../../Core/menu/menu-items/menu-items';
+import { UsuarioService } from '../../../Pages/Session/services/usuario.service';
 
 @Component({
   selector: 'embryo-Menu',
@@ -23,10 +24,17 @@ export class MenuComponent implements OnInit {
 
    expanded       : boolean;
 
-   constructor(public menuItems: MenuItems,public router: Router, public translate: TranslateService) {
+   constructor(
+    public menuItems: MenuItems,
+    public usuarioService: UsuarioService,
+    public authService: AuthService,
+    public router: Router, 
+    public translate: TranslateService) {
    }
 
    ngOnInit() {
+    console.log("this.usuarioService._authenticated", this.authService.authenticatedData);
+    
    }
 
    public onItemSelected(item: any) {

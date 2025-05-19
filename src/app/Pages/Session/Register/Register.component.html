@@ -9,54 +9,157 @@
           </div>
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
             <mat-card class="register-form form-margin">
-              <h4>Registrate</h4>
+              <h3 class="primary-color">Registrate</h3>
               <p>Es rápido y fácil</p>
               <form *ngIf="dataForm" [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                 <div class="mb-4">
+                  
                   <mat-form-field class="w-100 mt-3">
-                    <input matInput type="text" formControlName="nombre" placeholder="Nombre Completo" required>
+                    <input matInput type="text" formControlName="nombre" placeholder="Nombre" required>
                     <mat-error *ngIf="dataForm.get('nombre').hasError('required')">El campo no puede estar vacío</mat-error> 
                   </mat-form-field>
+
+                  <mat-form-field class="w-100 mt-3">
+                    <input matInput type="text" formControlName="apellido" placeholder="Apellido" required>
+                    <mat-error *ngIf="dataForm.get('apellido').hasError('required')">El campo no puede estar vacío</mat-error> 
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100 mt-3">
+                    <mat-select class="w-full overflow-hidden" formControlName="tipo_documento" 
+                      *ngIf="rolesAux" style="width: 100%" placeholder="Seleccione tipo documento">
+                      <mat-option>Seleccionar una opción</mat-option>
+                      <mat-option value="CC">CC - Cédula</mat-option>
+                      <mat-option value="TI">TI - Tarjeta de identidad</mat-option>
+                      <mat-option value="TI">PS - Pasaporte</mat-option>
+                      <mat-option value="CC">NIT - NIT</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="dataForm.get('tipo_documento').hasError('required')">El campo no puede estar vacío</mat-error> 
+                  </mat-form-field>
+
                   <mat-form-field class="w-100 mt-3">
                     <input matInput type="text" formControlName="documento" placeholder="Documento" required>
                     <mat-error *ngIf="dataForm.get('documento').hasError('required')">El campo no puede estar vacío</mat-error> 
                   </mat-form-field>
+
+                  <mat-form-field class="w-100 mt-3">
+                     <input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" [max]="maxDate" formControlName="fecha_nacimiento_aux" readonly>
+                     <mat-datepicker-toggle matSuffix [for]="picker" max></mat-datepicker-toggle>
+                     <mat-datepicker #picker></mat-datepicker>
+                     <mat-error *ngIf="dataForm.get('fecha_nacimiento_aux').hasError('required') && dataForm.get('fecha_nacimiento_aux').touched">Campo Obligatorio</mat-error>
+                  </mat-form-field>
+
                   <mat-form-field class="w-100 mt-3">
                     <input matInput type="email" formControlName="email" placeholder="Correo" required>
                     <mat-error *ngIf="dataForm.get('email').hasError('required')">El campo no puede estar vacío</mat-error> 
                     <mat-error class="mat-error" *ngIf="dataForm.controls['email'].errors?.['pattern']">Correo inválido</mat-error>
                   </mat-form-field>
+
                   <mat-form-field class="w-100 mt-3">
                     <input matInput formControlName="celular" maxlength="10" minlength="10" placeholder="Celular" required>
                     <mat-error *ngIf="dataForm.get('celular').hasError('required')">El campo no puede estar vacío</mat-error> 
                     <mat-error class="mat-error" *ngIf="dataForm.get('celular').hasError('minlength')">La cantidad de dígitos es mínimo 10</mat-error>
                     <mat-error class="mat-error" *ngIf="dataForm.get('celular').hasError('maxlength')">La cantidad de dígitos es máximo 10</mat-error>
                   </mat-form-field>
+
+                  <mat-form-field class="w-100 mt-3">
+                    <input matInput type="text" formControlName="direccion" placeholder="Dirección" required>
+                    <mat-error *ngIf="dataForm.get('direccion').hasError('required')">El campo no puede estar vacío</mat-error> 
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100 mt-3">
+                      <mat-select class="w-full overflow-hidden" formControlName="municipio" 
+                        style="width: 100%" placeholder="Seleccione un municipio">
+                        <mat-option>Seleccionar un municipio</mat-option>
+                        <mat-option *ngFor="let item of municipiosList" [value]="item.name">
+                           {{item.name}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="dataForm.get('municipio').hasError('required')">El campo no puede estar vacío</mat-error> 
+                    </mat-form-field>
+
+                  <mat-form-field class="w-100 mt-3">
+                    <mat-select class="w-full overflow-hidden" formControlName="genero" 
+                      *ngIf="genero" style="width: 100%" placeholder="Seleccione su género">
+                      <mat-option>Seleccionar una opción</mat-option>
+                      <mat-option *ngFor="let item of genero" [value]="item">
+                         {{item}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="dataForm.get('genero').hasError('required')">El campo no puede estar vacío</mat-error> 
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100 mt-3">
+                    <input matInput type="text" formControlName="eps" placeholder="Eps" required>
+                    <mat-error *ngIf="dataForm.get('eps').hasError('required')">El campo no puede estar vacío</mat-error> 
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100 mt-3">
+                    <input matInput type="text" formControlName="rh" placeholder="RH" required>
+                    <mat-error *ngIf="dataForm.get('rh').hasError('required')">El campo no puede estar vacío</mat-error> 
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100 mt-3">
+                    <input matInput type="text" formControlName="nombre_contacto_emergencia" placeholder="Nombre contacto emergencia" required>
+                    <mat-error *ngIf="dataForm.get('nombre_contacto_emergencia').hasError('required')">El campo no puede estar vacío</mat-error> 
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100 mt-3">
+                    <input matInput type="text" formControlName="celular_contacto_emergencia" placeholder="Celular contacto emergencia" required>
+                    <mat-error *ngIf="dataForm.get('celular_contacto_emergencia').hasError('required')">El campo no puede estar vacío</mat-error> 
+                  </mat-form-field>
+
                   <mat-form-field class="w-100 mt-3">
                     <input matInput type="text" formControlName="username" placeholder="Nombre de usuario" required>
                     <mat-error *ngIf="dataForm.get('username').hasError('required')">El campo no puede estar vacío</mat-error> 
                     <mat-error class="mat-error" *ngIf="dataForm.controls['username'].errors?.['pattern']">Debe tener entre 8 y 15 caracteres.</mat-error>
                     <mat-error class="mat-error" *ngIf="dataForm.controls['username'].errors?.['pattern']">Sin caracteres especiales y Minúscula sostenida.</mat-error>
                   </mat-form-field>
+
                   <mat-form-field class="w-100 mt-3">
                     <input matInput type="password" formControlName="password" placeholder="Contraseña" required>
                     <mat-error *ngIf="dataForm.get('password').hasError('required')">El campo no puede estar vacío</mat-error> 
                   </mat-form-field>
+
+                  <mat-form-field class="w-100 mt-3">
+                    <mat-select class="w-full overflow-hidden" formControlName="id_rol" 
+                      *ngIf="rolesAux" style="width: 100%" placeholder="Seleccione un rol">
+                      <mat-option>Seleccionar una opción</mat-option>
+                      <mat-option *ngFor="let item of rolesAux" [value]="item.id">
+                         {{item.descripcion}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="dataForm.get('id_rol').hasError('required')">El campo no puede estar vacío</mat-error> 
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100 mt-3">
+                    <mat-select class="w-full overflow-hidden" formControlName="id_club" 
+                      *ngIf="clubs" style="width: 100%" placeholder="Seleccione un club ">
+                      <mat-option>Seleccionar una opción</mat-option>
+                      <mat-option *ngFor="let item of clubs" [value]="item.id">
+                         {{item.nombre}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="dataForm.get('id_club').hasError('required')">El campo no puede estar vacío</mat-error> 
+                  </mat-form-field>
                 </div>
                 <div>
                   <p class="form-check-label">
-                    <!-- <input formControlName="terms" type="checkbox" [(ngModel)]="checkTerms"><a target="_blank" class="accent-color" href="../../../../assets/data/Terminos y condiciones.pdf">Terminos y condiciones</a> -->
-                    Al registrarte, aceptas los <a target="_blank" class="accent-color" href="../../../../assets/data/Terminos y condiciones.pdf">Términos y condiciones</a>.
+                    Por favor leer: 
+                    <a target="_blank" style="color: green;" href="https://drive.google.com/file/d/1KZhi5Jb1G9qdQND3IMWbULUOtRrnvYa3/view?usp=sharing">Acuerdo de Afiliación</a>, el 
+                    <a target="_blank" style="color: green;" href="https://drive.google.com/file/d/1j5YaU4UItwiX0i0Lgcs-gAzHGOKfI5cf/view?usp=sharing">Reglamento de Carreras</a> y 
+                    <a target="_blank" style="color: green;" href="https://drive.google.com/file/d/1POxh22FWMNbhDdSK4CtTU221u1NoKpwr/view?usp=sharing">Exoneración</a>.
                   </p>
+
+                  <p class="form-check-label">Al continuar con el proceso de registro manifiestas haber leído los documentos, aceptándolos y acatando en su totalidad. </p>
                 </div>
-                <button color="accent" class="button-lg mb-3" mat-flat-button type="submit">
+                <button color="primary" class="button-lg mb-3" mat-flat-button type="submit">
                   <span *ngIf="!dataForm.disabled">
                     Registrarse
                   </span>
                   <mat-progress-spinner *ngIf="dataForm.disabled" [diameter]="24" [mode]="'indeterminate'">
                   </mat-progress-spinner>
               </button>
-              <div> ¿Tienes una cuenta? <a class="accent-color" [routerLink]="['/home']">Inicia sesión</a></div>
+              <div> ¿Tienes una cuenta? <a class="primary-color" [routerLink]="['/session/signin']">Inicia sesión</a></div>
               </form>
             </mat-card>
           </div>

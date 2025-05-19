@@ -11,6 +11,226 @@ export interface Menu {
 	children?: Menu[];
 }
 
+const HeaderAdminLigaItems= [
+  {
+    state: "home",
+    name: "INICIO",
+    type: "link",
+    icon: "home",
+  },
+  {
+    state: "menu",
+    name: "MENÚ",
+    type: "sub",
+    mega: true,
+    icon: 'arrow_right_alt',
+    children: [
+      {  
+        state: 'menu', 
+        name: 'Competencias',
+        type: 'sub',
+        icon: 'arrow_right_alt',
+        children:[
+          {  
+            state: 'competencia/aprobarLiga', 
+            name: 'Aprobar oficiales',
+            type: 'link',
+            icon: 'perm_contact_calendar',
+          },
+          {  
+            state: 'competencia/aprobar', 
+            name: 'Aprobar NO oficiales',
+            type: 'link',
+            icon: 'perm_contact_calendar',
+          },
+          {  
+            state: 'competencia/list', 
+            name: 'Ver Iniciadas',
+            type: 'link',
+            icon: 'perm_contact_calendar',
+          },
+          {  
+            state: 'competencia/list/finalizadas', 
+            name: 'Ver Finalizadas',
+            type: 'link',
+            icon: 'perm_contact_calendar',
+          }
+        ]
+      },
+    ]
+  },
+  {
+    state: "contact",
+    name: "CONTÁCTENOS",
+    type: "link",
+    icon: "perm_contact_calendar",
+  },
+];
+
+const HeaderOrganizadorItems= [
+  {
+    state: "home",
+    name: "INICIO",
+    type: "link",
+    icon: "home",
+  },
+  {
+    state: "menu",
+    name: "MENÚ",
+    type: "sub",
+    mega: true,
+    icon: 'arrow_right_alt',
+    children: [
+      {  
+        state: 'menu', 
+        name: 'Competencias',
+        type: 'sub',
+        icon: 'arrow_right_alt',
+        children:[
+          {  
+            state: 'competencia/create', 
+            name: 'Crear Competencia',
+            type: 'link',
+            icon: 'arrow_right_alt',
+          },
+          {  
+            state: 'competencia/list', 
+            name: 'Ver Iniciadas',
+            type: 'link',
+            icon: 'perm_contact_calendar',
+          },
+          {  
+            state: 'competencia/list/finalizadas', 
+            name: 'Ver Finalizadas',
+            type: 'link',
+            icon: 'perm_contact_calendar',
+          }
+        ]
+      }
+    ]
+  },
+  {
+    state: "contact",
+    name: "CONTÁCTENOS",
+    type: "link",
+    icon: "perm_contact_calendar",
+  },
+];
+
+const HeaderAdminItems= [
+  {
+    state: "home",
+    name: "INICIO",
+    type: "link",
+    icon: "home",
+  },
+  {
+    state: "menu",
+    name: "MENÚ",
+    type: "sub",
+    mega: true,
+    icon: 'arrow_right_alt',
+    children: [
+      {  
+        state: 'menu', 
+        name: 'Competencias',
+        type: 'sub',
+        icon: 'arrow_right_alt',
+        children:[
+          {  
+            state: 'competencia/create', 
+            name: 'Crear Competencia',
+            type: 'link',
+            icon: 'arrow_right_alt',
+          },
+          {  
+            state: 'competencia/list', 
+            name: 'Ver Iniciadas',
+            type: 'link',
+            icon: 'perm_contact_calendar',
+          },
+          {  
+            state: 'competencia/list/finalizadas', 
+            name: 'Ver Finalizadas',
+            type: 'link',
+            icon: 'perm_contact_calendar',
+          }
+        ]
+      },
+      {
+        state: 'menu', 
+        name: 'Atletas',
+        type: 'sub',
+        icon: 'arrow_right_alt',
+        children:[
+          {  
+            state: 'atleta/register', 
+            name: 'Registrar atleta',
+            type: 'link',
+            icon: 'arrow_right_alt',
+          }
+        ]
+      }
+    ]
+  },
+  {
+    state: "contact",
+    name: "CONTÁCTENOS",
+    type: "link",
+    icon: "perm_contact_calendar",
+  },
+];
+
+const HeaderAtletaItems= [
+  {
+    state: "home",
+    name: "INICIO",
+    type: "link",
+    icon: "home",
+  },
+  {
+    state: "menu",
+    name: "MENÚ",
+    type: "sub",
+    mega: true,
+    icon: 'arrow_right_alt',
+    children: [
+      {  
+        state: 'menu', 
+        name: 'Competencias',
+        type: 'sub',
+        icon: 'arrow_right_alt',
+        children:[
+          {  
+            state: 'atleta/register', 
+            name: 'Registrar competencia',
+            type: 'link',
+            icon: 'arrow_right_alt',
+          },
+          {  
+            state: 'competencia/list', 
+            name: 'Ver Iniciadas',
+            type: 'link',
+            icon: 'perm_contact_calendar',
+          },
+          {  
+            state: 'competencia/list/finalizadas', 
+            name: 'Ver Finalizadas',
+            type: 'link',
+            icon: 'perm_contact_calendar',
+          }
+        ]
+      }
+    ]
+  },
+  {
+    state: "contact",
+    name: "CONTÁCTENOS",
+    type: "link",
+    icon: "perm_contact_calendar",
+  },
+];
+
 const HeaderOneItems= [
   {
     state: "home",
@@ -18,57 +238,11 @@ const HeaderOneItems= [
     type: "link",
     icon: "home",
   },
-  // {
-  //   state: "about",
-  //   name: "NOSOTROS",
-  //   type: "sub",
-  //   icon: "arrow_right_alt",
-  //   children: [
-  //     {  
-  //       state: 'about', 
-  //       name: 'NOSOTROS',
-  //       type: 'link',
-  //       icon: 'home'
-  //     },
-  //     {  
-  //       state: 'term-condition', 
-  //       name: 'TÉRMINOS Y CONDICIONES',
-  //       type: 'link',
-  //       icon: 'arrow_right_alt',
-  //    }
-  //   ]
-  // },
-  // {
-  //   state:'products',
-  //   name:"PROFESIONALES",
-  //   type:"link",
-  //   icon: 'party_mode'
-  // },
   {
-    state:'',
-    name:"Menú",
-    type:"link",
-    icon: 'perm_contact_calendar',
-    children: [
-      {  
-        state: 'competencia/list', 
-        name: 'Ver competencias',
-        type: 'link',
-        icon: 'perm_contact_calendar',
-      },
-      {  
-        state: 'competencia/create', 
-        name: 'Registrar competencia',
-        type: 'link',
-        icon: 'arrow_right_alt',
-      },
-      {  
-        state: 'categoria/create', 
-        name: 'Registrar categoria',
-        type: 'link',
-        icon: 'arrow_right_alt',
-      },
-    ]
+    state: "contact",
+    name: "CONTÁCTENOS",
+    type: "link",
+    icon: "perm_contact_calendar",
   },
 ];
 
@@ -182,7 +356,7 @@ const FooterOneItems= [
     icon: '',
     children: [
       {
-        state: 'https://www.facebook.com/derechos.4', 
+        state: 'https://www.facebook.com/Junior.Romero.99/about', 
         name: 'Facebook',
         type: 'social_link',
         icon: 'arrow_right_alt',
@@ -194,8 +368,8 @@ const FooterOneItems= [
         icon: 'arrow_right_alt',
       },
       {
-        state: 'https://www.youtube.com/derechos.4', 
-        name: 'Youtube',
+        state: 'https://www.instagram.com/ligaocrantioquia/', 
+        name: 'Instagram',
         type: 'social_link',
         icon: 'arrow_right_alt',
       },
@@ -216,7 +390,24 @@ export class MenuItems {
    /*
     * Get all header menu
     */
-   getMainMenu(): Menu[] {
+   getMainMenu(rol): Menu[] {
+    if(rol == "ADMIN"){
+      return HeaderAdminItems;
+    }
+    if(rol == "ADMIN-LIGA"){
+      return HeaderAdminLigaItems;
+    }
+    if(rol == "ORGANIZADOR"){
+      return HeaderOrganizadorItems;
+    }
+    if(rol == "ATLETA"){
+      return HeaderAtletaItems;
+    }
+
+    return FooterOneItems;
+      
+   }
+   getMainMenuInicio(): Menu[] {
       return HeaderOneItems;
    }
 

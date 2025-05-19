@@ -83,7 +83,7 @@ export class GanadoresDialogComponent implements OnInit {
     this.atletas = [];
     this.allAtletas.forEach(element => {
       // console.log("diferencia" + element.nombre, formatDate((element.tiempo_competencia), 'HH:mm:ss', 'en-US') - formatDate((this.competencia.hora_inicio), 'HH:mm:ss', 'en-US'));
-      if(element.categoria_id === categoria.id){
+      if(element.id_categoria === categoria.id){
         this.atletas.push(element);
       }
     });
@@ -96,7 +96,7 @@ export class GanadoresDialogComponent implements OnInit {
 
   caluclarTiempoPorAtleta(atleta:Atleta){
     const oleadaTiempo = this.oleadas.find(item => {
-      if(item.id_categoria == atleta.categoria_id && item.id_competencia == atleta.competencia_id) return item;
+      if(item.id_categoria == atleta.id_categoria && item.id_competencia == atleta.id_competencia) return item;
     });
     if(oleadaTiempo){
       const fecha1 = moment(oleadaTiempo.fechaInicio, "YYYY-MM-DD HH:mm:ss");
@@ -129,7 +129,7 @@ export class GanadoresDialogComponent implements OnInit {
 
   verFechaInicio(element:Atleta){
     const oleadaFecha = this.oleadas.find(item => {
-      if(item.id_categoria == element.categoria_id && item.id_competencia == element.competencia_id && item.no_oleada == element.no_oleada) return item
+      if(item.id_categoria == element.id_categoria && item.id_competencia == element.id_competencia && item.no_oleada == element.no_oleada) return item
     });
     return moment(oleadaFecha?.fechaInicio, "HH:mm:ss")
   }

@@ -1,5 +1,27 @@
 <div class="home-main-banner mb-5">
   <div class="container">
+    <div class="section-gap pt-3 pb-0">
+      <mat-toolbar color="primary" style="height:220px" class="section-title-toolbar">
+        <mat-toolbar-row>
+          <div fxLayoutAlign="space-between" class="w-100 toolbar-title">
+            <div class="block-title">
+              <h2 class="text-inverse mb-0 text-xxl">Próximos eventos</h2>
+            </div>
+          </div>
+        </mat-toolbar-row>
+      </mat-toolbar>
+      <ngx-slick-carousel class="carousel home-2-slider shop-card-gap px-4" [config]="slideConfigTwo">
+        <div ngxSlickItem *ngFor="let slide of arraySlider">
+          <div class="relative">
+            <img [src]="slide.img" alt="" width="100%" style="max-height: 22em;">
+            <div class="home-2-slider-content">
+              <div [innerHTML]="slide?.content"></div>
+            </div>
+         </div>
+        </div>
+      </ngx-slick-carousel>
+    </div>
+    
     <div fxLayout='row wrap' fxLayoutGap="0px">
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="63" fxFlex.xl="63">
         <div class="home-slider">
@@ -20,6 +42,22 @@
           <a class="card-shadow"><img [src]="urlSlide2" alt="side" width="547" height="315"></a>
           <div class="imageTitle"><b>REGISTRAR CATEGORÍA</b></div>
         </div> -->
+      </div>
+    </div>
+    <div class="section-gap pt-0 pb-0 mt-5">
+      <div class="container">
+         <div fxLayoutAlign="space-between" class="w-100">
+            <div class="block-title mb-4">
+            <h3>Patrocinadores</h3>
+            </div>
+         </div>
+         <ngx-slick-carousel class="carousel" [config]="slideConfigBrands">
+          <div ngxSlickItem *ngFor="let brand of brandsLogoArray">
+            <!-- <a [routerLink]="['/products']"> -->
+              <img width="150" height="0" [src]="brand.image"  alt="logo client">
+            <!-- </a> -->
+          </div>
+        </ngx-slick-carousel>
       </div>
     </div>
   </div>

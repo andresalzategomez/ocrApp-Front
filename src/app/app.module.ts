@@ -46,7 +46,8 @@ import { EmbryoService } from './Services/Embryo.service';
 
 import { AppComponent } from './app.component';
 import { MainComponent } from './Main/Main.component';
-import { HeaderOneComponent } from './Layouts/Header/HeaderOne/HeaderOne.component';
+import { AdminPanelModule } from './AdminPanel/admin-panel.module';
+import { HeaderTwoComponent } from './Layouts/Header/HeaderTwo/HeaderTwo.component';
 import { FooterOneComponent } from './Layouts/Footer/FooterOne/FooterOne.component';
 import { MenuComponent } from './Layouts/Menu/Menu/Menu.component';
 import { HomeoneComponent } from './Pages/Home/HomeOne/HomeOne.component';
@@ -57,6 +58,7 @@ import { FixedHeaderComponent } from './Layouts/Header/FixedHeader/FixedHeader.c
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { HomeTwoComponent } from './Pages/Home/HomeTwo/HomeTwo.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -72,7 +74,8 @@ export function createTranslateLoader(http: HttpClient) {
 		AppComponent,
 		MainComponent,
 		HomeoneComponent,
-		HeaderOneComponent,
+		HomeTwoComponent,
+		HeaderTwoComponent,
 		FooterOneComponent,
 		MenuComponent,
 		SideBarMenuComponent,
@@ -126,6 +129,7 @@ export function createTranslateLoader(http: HttpClient) {
 			}
 		}),
 		PerfectScrollbarModule,
+		AdminPanelModule
   ],
 	providers: [
 		MenuItems,

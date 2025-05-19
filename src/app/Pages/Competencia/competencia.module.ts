@@ -41,11 +41,17 @@ import { ShowCompetenciaComponent } from './showcompetencia/components/showcompe
 import { GanadoresDialogComponent } from './ganadores-dialog/ganadores-dialog.component';
 import { IniciarcompetenciaComponent } from './iniciarCompetencia/iniciarcompetencia.component';
 import { dialogIniciarOleadaComponent } from './dialoginiciaroleada/dialoginiciaroleada.component';
+import { ListCompetenciaFinalizadasComponent } from './listcompetencia/components/listcompetenciafinalizadas/listcompetenciafinalizadas.component';
+import { ListCompetenciaAprobarComponent } from './listcompetencia/components/listcompetenciaaprobar/listcompetenciaaprobar.component';
+import { ListCompetenciaAprobarLigaComponent } from './listcompetencia/components/listcompetenciaaprobarliga/listcompetenciaaprobarliga.component';
 
 @NgModule({
   declarations: [
     CreatecompetenciaComponent,
     ListCompetenciaComponent,
+    ListCompetenciaAprobarComponent,
+    ListCompetenciaAprobarLigaComponent,
+    ListCompetenciaFinalizadasComponent,
     ShowCompetenciaComponent,
     GanadoresDialogComponent,
     IniciarcompetenciaComponent,

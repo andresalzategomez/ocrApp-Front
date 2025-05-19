@@ -2,7 +2,7 @@ import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CompetenciaService } from '../../../../Competencia/services/competencia.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Competencia } from '../../../../Competencia/models/competencia.model';
 import { CategoriaService } from '../../../services/categoria.service';
 
@@ -15,20 +15,25 @@ declare let alertify: any;
 })
 export class CreatecategoriaComponent implements OnInit {
 
-  dataForm:FormGroup
+  dataForm:FormGroup;
   checkTerms:boolean = true;
-  minDate:Date
-  competenciaList:Competencia[] = []
+  minDate:Date;
+  competenciaList:Competencia[] = [];
+  userLogin:any;
+  idCompetencia:number;
 
   constructor(
     private formBuilder: FormBuilder,
     private categoriaService: CategoriaService,
     public router : Router,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit() {
+    this.idCompetencia =  this.route.snapshot.params['idCompetencia'];
+    this.userLogin = JSON.parse(localStorage.getItem('authenticatedData')|| '')
     this.createForm();
-    this.findCompetenciasInicio()
+    this.getCompetenciaById()
     this.minDate = new Date(Date.now());
   }
 
@@ -64,9 +69,7 @@ export class CreatecategoriaComponent implements OnInit {
             alertify.set('notifier','position', 'top-right');
             alertify.success('Categoría creada con exito!', 4);
 
-            this.dataForm.reset();
-
-            // this.router.navigate(['/home']);
+            this.router.navigate(['/competencia/iniciar/' + this.idCompetencia]);
           }
         },
         error: (err) => {
@@ -79,11 +82,13 @@ export class CreatecategoriaComponent implements OnInit {
       });
   }
 
-  findCompetenciasInicio(){
-    this.categoriaService.getCompetenciasInicio()
+  getCompetenciaById(){
+    this.categoriaService.getCompetenciaById(this.idCompetencia)
       .subscribe({
         next: (data: Competencia[]) => {
-          console.log("data", data);
+          console.log("data compe", data);
+          this.dataForm.get("id_competencia").setValue(data[0].id)
+          console.log("this.dataForm", this.dataForm.value);
           this.competenciaList = data;
         },
         error: (err) => {

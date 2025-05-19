@@ -1,0 +1,41 @@
+  <div class="page-title-bar">
+    <div class="container">
+      <h2> Próximos eventos</h2>
+      <!-- <p class="lead text-xxl"> {{subHeading}} </p> -->
+    </div>
+  </div>
+
+  <div class="section-gap pt-2 pb-0">
+    <ngx-slick-carousel class="carousel home-2-slider shop-card-gap px-4" [config]="slideConfigTwo">
+      <div ngxSlickItem *ngFor="let slide of arraySlider">
+        <div class="relative">
+          <img [src]="slide.img" alt="" width="100%" style="max-height: 35em;">
+          <div class="home-2-slider-content"></div>
+       </div>
+      </div>
+    </ngx-slick-carousel>
+  </div>
+    
+<div class="container"> 
+  <div class="section-gap pt-0">
+    <div class="container">
+        <div class="section-gap pt-0 pb-0 mt-5">
+          <div class="container">
+            <div fxLayoutAlign="space-between" class="w-100">
+                <div class="block-title mb-4">
+                <h3>Patrocinadores</h3>
+                </div>
+            </div>
+            <ngx-slick-carousel class="carousel" [config]="slideConfigBrands">
+              <div ngxSlickItem *ngFor="let brand of brandsLogoArray">
+                <!-- <a [routerLink]="['/products']"> -->
+                  <img width="150" height="0" [src]="brand.image"  alt="logo client">
+                <!-- </a> -->
+              </div>
+            </ngx-slick-carousel>
+          </div>
+        </div>
+    </div>
+  </div>
+
+</div>

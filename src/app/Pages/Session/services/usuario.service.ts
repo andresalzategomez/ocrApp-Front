@@ -33,6 +33,55 @@ export class UsuarioService {
           })
         );	
     }
+
+    public getRole() {
+      return this._httpClient.post<any>(`${this.apiUrl}/getRole`, {
+        tenant: environment.tenant
+      })
+      .pipe(
+        catchError((error) => {
+          console.log('error log', error);
+          if (error.status === 200) return error.message;
+        }),
+        retry(3),
+        map((data: any) => {
+          if (data.response === 'OK') return data.rol;
+        })
+      );
+    }
+
+    public getRoleById(id) {
+      return this._httpClient.post<any>(`${this.apiUrl}/getRoleById`, {
+        "id": id,
+        "tenant": environment.tenant
+      })
+      .pipe(
+        catchError((error) => {
+          console.log('error log', error);
+          if (error.status === 200) return error.message;
+        }),
+        retry(3),
+        map((data: any) => {
+          if (data.response === 'OK') return data.rol;
+        })
+      );
+    }
+
+    public getClub() {
+      return this._httpClient.post<any>(`${this.apiUrl}/getClub`, {
+        tenant: environment.tenant
+      })
+      .pipe(
+        catchError((error) => {
+          console.log('error log', error);
+          if (error.status === 200) return error.message;
+        }),
+        retry(3),
+        map((data: any) => {
+          if (data.response === 'OK') return data.club;
+        })
+      );
+    }
     
     createUsuario(parameter: Usuario){
         return this._httpClient.post(`${this.apiUrl}/createUsuario`, { 

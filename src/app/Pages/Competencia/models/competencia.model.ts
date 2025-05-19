@@ -1,15 +1,14 @@
  export interface Competencia {
     id:number;
     nombre:string;
-    lugar:string;
+    departamento:string;
+    municipio:string;
     direccion:string;
-    club:string;
-    organizador:string;
-    celular_organizador:string;
-    documento_organizador:string;
-    email_organizador:string;
     fecha: Date;
     estado:string;
+    oficialLiga:boolean;
+    aprobado:boolean;
+    id_usuario:number;
     hora_inicio:string;
     hora_final:string;
 }

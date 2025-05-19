@@ -17,7 +17,7 @@ export class ListCompetenciaComponent implements OnInit {
 	competenciasGrid:Competencia [] = []
 	popUpDeleteUserResponse : any;
 	showType	    				: string = 'list';
-	displayedProductColumns : string [] = ['id', 'nombre', 'organizador', 'documento', 'celular', 'email', 'fecha', 'estado', 'action'];
+	displayedProductColumns : string [] = ['id', 'nombre', 'fecha', 'estado', 'oficialLiga', 'aprobado', 'action'];
 	@ViewChild(MatPaginator) paginator : MatPaginator;
 	@ViewChild(MatSort) sort           : MatSort;
 
