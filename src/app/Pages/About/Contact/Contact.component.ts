@@ -12,6 +12,13 @@ export class ContactComponent implements OnInit {
    emailPattern : any = /\S+@\S+\.\S+/;
 
    @Input() address : any;
+
+   center: google.maps.LatLngLiteral = { lat: 6.2401035, lng: -75.5615565 };
+   zoom = 12;
+   markers = [
+      { lat: 6.2401035, lng: -75.5615565 },
+      { lat: 40.74988, lng: -73.968285 }
+   ];
    
    mapOptions : any = {
       lat          : 6.2401035,
@@ -23,8 +30,6 @@ export class ContactComponent implements OnInit {
       visible      : true,
    };
 
-   showMap : boolean = false;
-
    icon : any = {
       url: './assets/images/flag.svg',
       scaledSize: {
@@ -33,43 +38,9 @@ export class ContactComponent implements OnInit {
       }
    }
 
-   constructor(public embryoService : EmbryoService) {
-      // this.embryoService.getContactInfo().valueChanges().subscribe(res => {
-      //    this.contactInfo = res
-      //    console.log("contactInfo", this.contactInfo);
-         
-      // });
-   }
+   constructor(public embryoService : EmbryoService) {}
 
    ngOnInit() {
-      if(this.address) {
-         this.getLatitudeLongitude(this.address);
-      }
-   }
-
-   getLatitudeLongitude(address) 
-   {
-      // If adress is not supplied, use default value 'Ferrol, Galicia, Spain'
-      address = address || 'Ferrol, Galicia, Spain';
-      let NewMapOptions = this.mapOptions
-      // Initialize the Geocoder
-      let geocoder = new google.maps.Geocoder();
-      if (geocoder) 
-      {
-         geocoder.geocode({
-            'address': address
-         }, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) 
-            {
-               NewMapOptions.lat = results[0].geometry.location.lat();
-               NewMapOptions.lng = results[0].geometry.location.lng();
-            }
-        });
-
-        this.mapOptions.lat = NewMapOptions.lat;
-        this.mapOptions.lng = NewMapOptions.lng;
-        this.showMap = true;
-      }
    }
 }
 

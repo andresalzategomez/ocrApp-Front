@@ -6,5 +6,6 @@ export const environment = {
 	API_URL_USUARIO:'/v1/api/ocr/user',
 	smpa_apigateway_core_pwd: 'password',
     smpa_apigateway_core_user: 'user',
-	tenant: "OCR-TENANT"
+	tenant: "OCR-TENANT",
+	googleMapsApiKey: 'YOUR_API_KEY'
 };
