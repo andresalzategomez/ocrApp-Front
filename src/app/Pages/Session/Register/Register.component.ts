@@ -40,7 +40,9 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.userLogin = JSON.parse(localStorage.getItem('authenticatedData')|| '')
+    if(localStorage.getItem('authenticatedData')){
+      this.userLogin = JSON.parse(localStorage.getItem('authenticatedData')|| "")
+    }
     this.maxDate = new Date(Date.now());
     this.createForm();
     this.initForm()

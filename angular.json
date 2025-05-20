@@ -32,7 +32,7 @@
               "querystring-es3/encode",
               "@algolia/events"
             ],
-            "outputPath": "dist",
+            "outputPath": "dist/ocrApp-Front",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -69,8 +69,9 @@
           "configurations": {
             "production": {
               "budgets": [{
-                "type": "anyComponentStyle",
-                "maximumWarning": "6kb"
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
               }],
               "fileReplacements": [{
                 "replace": "src/environments/environment.ts",
