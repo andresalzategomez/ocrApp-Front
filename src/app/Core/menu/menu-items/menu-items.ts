@@ -404,7 +404,7 @@ export class MenuItems {
       return HeaderAtletaItems;
     }
 
-    return FooterOneItems;
+    return HeaderOneItems;
       
    }
    getMainMenuInicio(): Menu[] {
