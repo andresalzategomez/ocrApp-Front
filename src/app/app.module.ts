@@ -59,6 +59,7 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { HomeTwoComponent } from './Pages/Home/HomeTwo/HomeTwo.component';
+import { AboutUsComponent } from './Pages/AboutUs/AboutUs.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -80,7 +81,8 @@ export function createTranslateLoader(http: HttpClient) {
 		MenuComponent,
 		SideBarMenuComponent,
 		NotFoundComponent,
-		FixedHeaderComponent
+		FixedHeaderComponent,
+		AboutUsComponent
 	],
 	imports: [
 		BrowserModule.withServerTransition({appId: 'embryo-seo-pre'}),

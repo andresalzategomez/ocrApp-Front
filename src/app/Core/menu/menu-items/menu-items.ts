@@ -19,6 +19,12 @@ const HeaderAdminLigaItems= [
     icon: "home",
   },
   {
+    state: "about",
+    name: "NOSOTROS",
+    type: "link",
+    icon: "about",
+  },
+  {
     state: "menu",
     name: "MENÚ",
     type: "sub",
@@ -75,6 +81,12 @@ const HeaderOrganizadorItems= [
     icon: "home",
   },
   {
+    state: "about",
+    name: "NOSOTROS",
+    type: "link",
+    icon: "about",
+  },
+  {
     state: "menu",
     name: "MENÚ",
     type: "sub",
@@ -123,6 +135,12 @@ const HeaderAdminItems= [
     name: "INICIO",
     type: "link",
     icon: "home",
+  },
+  {
+    state: "about",
+    name: "NOSOTROS",
+    type: "link",
+    icon: "about",
   },
   {
     state: "menu",
@@ -189,6 +207,12 @@ const HeaderAtletaItems= [
     icon: "home",
   },
   {
+    state: "about",
+    name: "NOSOTROS",
+    type: "link",
+    icon: "about",
+  },
+  {
     state: "menu",
     name: "MENÚ",
     type: "sub",
@@ -239,6 +263,12 @@ const HeaderOneItems= [
     icon: "home",
   },
   {
+    state: "about",
+    name: "NOSOTROS",
+    type: "link",
+    icon: "about",
+  },
+  {
     state: "contact",
     name: "CONTÁCTENOS",
     type: "link",
@@ -265,12 +295,6 @@ const FooterOneItems= [
          type: 'link',
          icon: 'arrow_right_alt',
       },
-      // {  
-      //   state: 'privacy-policy', 
-      //   name: 'PRIVACY POLICY',
-      //   type: 'link',
-      //   icon: 'arrow_right_alt',
-      // },
       {  
         state: 'faq', 
         name: 'Preguntas Frecuentes',

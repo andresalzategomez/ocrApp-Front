@@ -50,7 +50,7 @@ export class HomeTwoComponent implements OnInit {
             "content": "Prueba"
          },
          {
-            "img": 'assets/images/aside/aside-1.jpg',
+            "img": 'assets/images/aside/aside-2.jpg',
             "content": "Prueba"
          },
          {
@@ -58,7 +58,7 @@ export class HomeTwoComponent implements OnInit {
             "content": "Prueba"
          },
          {
-            "img": 'assets/images/aside/aside-1.jpg',
+            "img": 'assets/images/aside/aside-2.jpg',
             "content": "Prueba"
          }
       ]

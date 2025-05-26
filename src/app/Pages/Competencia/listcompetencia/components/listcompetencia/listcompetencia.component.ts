@@ -21,6 +21,8 @@ export class ListCompetenciaComponent implements OnInit {
 	@ViewChild(MatPaginator) paginator : MatPaginator;
 	@ViewChild(MatSort) sort           : MatSort;
 
+  userLogin:any;
+
 	constructor(
     public translate : TranslateService,
     private categoriaService: CategoriaService,
@@ -28,11 +30,12 @@ export class ListCompetenciaComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		this.findCompetenciasInicio()
+    this.userLogin = JSON.parse(localStorage.getItem('authenticatedData')|| '')
+		this.getCompetenciasInicioById()
 	}
 
-  findCompetenciasInicio(){
-    this.categoriaService.getCompetenciasInicio()
+  getCompetenciasInicioById(){
+    this.categoriaService.getCompetenciasInicioById(this.userLogin?.id)
       .subscribe({
         next: (data: Competencia[]) => {
           console.log("data", data);

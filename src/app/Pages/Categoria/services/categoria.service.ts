@@ -75,6 +75,24 @@ export class CategoriaService {
   }
 
 
+  getCompetenciasInicioById(idUsuario){
+    return this._httpClient.post(`${this.apiUrl}/getCompetenciasInicioById`, { 
+      "id_usuario": idUsuario,
+      "tenant": environment.tenant
+    })
+    .pipe(
+    catchError((error) => {
+      console.error('error', error);
+      if (error.status === 200) return error.message;
+    }),
+    retry(3),
+      map((data: any) => {
+        if (data.response === 'OK') return data.competencia;
+      })
+    );	
+  }
+
+
   getCompetenciasInicio(){
     return this._httpClient.post(`${this.apiUrl}/getCompetenciasInicio`, { 
       "tenant": environment.tenant

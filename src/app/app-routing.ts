@@ -4,6 +4,7 @@ import { Route} from '@angular/router';
 
 import { MainComponent } from './Main/Main.component';
 import { HomeTwoComponent } from './Pages/Home/HomeTwo/HomeTwo.component';
+import { AboutUsComponent } from './Pages/AboutUs/AboutUs.component';
 import { NotFoundComponent } from './Pages/NotFound/NotFound.component';
 import { AuthGuard } from './Core/guards/auth.guard';
 
@@ -33,6 +34,10 @@ export const AppRoutes : Route[] = [
          {
             path : 'home',
             component : HomeTwoComponent
+         },
+         {
+            path : 'about',
+            component : AboutUsComponent
          },
          {
             path: 'not-found',
